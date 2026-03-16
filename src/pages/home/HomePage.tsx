@@ -3,7 +3,7 @@ import { HeroSection } from './sections/Hero';
 import { Resources } from './sections/Resources';
 import { Search } from './sections/Search';
 import { CatalogSections } from './sections/Catalog';
-import { Drive } from './sections/drive';
+import { Drive } from './sections/Drive';
 
 export function HomePage() {
   useEffect(() => {

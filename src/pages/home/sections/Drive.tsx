@@ -1,7 +1,7 @@
 export function Drive() {
   return (
     <section
-      className="container flex w-full flex-col items-center justify-center py-40 lg:px-40"
+      className="container flex w-full flex-col items-center justify-center py-40 lg:px-40 mx-auto"
       role="region"
       aria-label="Drive section"
     >
