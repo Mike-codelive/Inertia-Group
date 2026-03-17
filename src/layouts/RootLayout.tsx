@@ -1,5 +1,5 @@
+import { Navbar } from '@/components/navigation/Navbar';
 import { Footer } from './Footer';
-import { Navbar } from './Navbar';
 
 type RootLayoutProps = {
   isReady: boolean;

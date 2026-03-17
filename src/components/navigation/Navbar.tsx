@@ -9,13 +9,22 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from '@/components/ui/sheet';
 import { navItems } from '@/data/navigation';
 import { Menu, MoveRight, SearchIcon } from 'lucide-react';
-import { useState, useRef, useLayoutEffect } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
+import { AuthDialog } from '@/components/auth/AuthDialog';
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const navListRef = useRef<HTMLUListElement>(null);
@@ -85,12 +94,7 @@ export function Navbar() {
                               <NavigationMenuLink asChild>
                                 <a
                                   href={sub.href}
-                                  className="
-                                  block select-none space-y-1 rounded-md p-3 leading-none
-                                  no-underline outline-none transition-colors
-                                  hover:bg-transparent hover:text-accent-foreground
-                                  focus:bg-transparent focus:text-accent-foreground
-                                  "
+                                  className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-transparent hover:text-accent-foreground"
                                 >
                                   <div className="text-sm font-medium leading-none">
                                     {sub.label}
@@ -106,16 +110,7 @@ export function Navbar() {
                     <NavigationMenuLink asChild>
                       <a
                         href={item.href}
-                        className={`
-                          ${navigationMenuTriggerStyle()}
-                          hover:bg-transparent
-                          hover:text-foreground
-                          focus:bg-transparent
-                          focus:text-foreground
-                          px-4 py-2 text-sm font-medium
-                          transition-colors duration-150
-                          relative z-10 bg-transparent
-                        `}
+                        className={`${navigationMenuTriggerStyle()} bg-transparent hover:bg-transparent hover:text-foreground`}
                       >
                         <span
                           ref={(el) => {
@@ -137,30 +132,19 @@ export function Navbar() {
             <Input
               type="search"
               placeholder="SEARCH BY PART # OR KEYWORD"
-              className="
-              peer h-5 md:h-7 rounded-none
-              border dark:border-0 border-black/20 border-r-0
-              outline -outline-offset-1 dark:outline-0
-              focus:border-r-0
-              focus-visible:ring-0 focus-visible:ring-offset-0
-              placeholder:text-xs
-              pl-10
-              [&::-webkit-search-cancel-button]:appearance-none
-              [&::-webkit-search-cancel-button]:hidden
-              [&::-ms-clear]:hidden lg:min-w-59
-              "
+              className="peer h-5 md:h-7 rounded-none border border-black/20 border-r-0 pl-10 placeholder:text-xs lg:min-w-59"
             />
 
-            <SearchIcon className="absolute peer-focus:text-black left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <SearchIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
 
             <Button className="group relative h-5 md:h-7 rounded-none bg-red-600 px-6 hover:bg-red-700 text-white">
               <MoveRight className="size-5 transition-transform duration-200 ease-out group-hover:translate-x-1" />
             </Button>
           </div>
 
-          <div className="flex items-center gap-4">
-            <Button variant="ghost">LOG IN/SIGN UP</Button>
-          </div>
+          <Button variant="outline" onClick={() => setLoginOpen(true)}>
+            LOG IN / SIGN UP
+          </Button>
         </div>
 
         <Sheet open={open} onOpenChange={setOpen}>
@@ -171,9 +155,14 @@ export function Navbar() {
           </SheetTrigger>
 
           <SheetContent side="right" className="w-75 sm:w-100">
-            <div className="flex flex-col gap-6 mt-8">
+            <SheetHeader className="sr-only">
+              <SheetTitle>Navigation Menu</SheetTitle>
+              <SheetDescription>Main navigation for mobile devices</SheetDescription>
+            </SheetHeader>
+
+            <div className="flex flex-col gap-6 mt-15 h-full">
               {navItems.map((item) => (
-                <div key={item.label}>
+                <div key={item.label} className="pl-10">
                   <a
                     href={item.href}
                     className="block text-lg font-medium hover:text-primary transition-colors"
@@ -199,18 +188,24 @@ export function Navbar() {
                 </div>
               ))}
 
-              <div className="relative mt-4">
-                <SearchIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input placeholder="Search..." className="pl-10" />
-              </div>
-
-              <div className="flex flex-col gap-3 mt-6">
-                <Button>LOG IN/SIGN UP</Button>
+              <div className="flex justify-center mt-auto">
+                <Button
+                  className="py-5 mb-5"
+                  variant="ghost"
+                  onClick={() => {
+                    setOpen(false);
+                    setTimeout(() => setLoginOpen(true), 150);
+                  }}
+                >
+                  LOG IN / SIGN UP
+                </Button>
               </div>
             </div>
           </SheetContent>
         </Sheet>
       </div>
+
+      <AuthDialog open={loginOpen} onOpenChange={setLoginOpen} />
     </header>
   );
 }
