@@ -18,13 +18,15 @@ import {
   SheetDescription,
 } from '@/components/ui/sheet';
 import { navItems } from '@/data/navigation';
-import { Menu, MoveRight, SearchIcon } from 'lucide-react';
+import { Menu, MoveRight, SearchIcon, X } from 'lucide-react';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { AuthDialog } from '@/components/auth/AuthDialog';
+import { ThemeToggle, ThemeToggleMobile } from '../theme/ThemeToggle';
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const navListRef = useRef<HTMLUListElement>(null);
@@ -59,6 +61,36 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
+      {searchOpen && (
+        <div className="absolute inset-0 z-50 flex items-center bg-background px-6">
+          <div className="flex w-full items-center">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setSearchOpen(false)}
+              className="mr-2"
+            >
+              <X />
+            </Button>
+
+            <div className="flex relative items-center w-full bg-white hover:bg-gray-100 dark:text-black">
+              <Input
+                autoFocus
+                type="search"
+                placeholder="SEARCH BY PART # OR KEYWORD"
+                className="h-10 rounded-none border border-black/20 border-r-0 pl-10 placeholder:text-xs w-full"
+              />
+
+              <SearchIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+
+              <Button className="h-10 rounded-none bg-red-600 px-4 hover:bg-red-700 text-white">
+                <MoveRight className="size-5" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="container mx-auto flex h-16 items-center justify-between px-6">
         <a href="/" className="flex items-center gap-2 font-semibold text-lg md:text-xl">
           <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-gray-950 font-bold">
@@ -66,7 +98,7 @@ export function Navbar() {
           </div>
         </a>
 
-        <div className="hidden lg:flex items-center lg:gap-8">
+        <div className="hidden lg:flex items-center md:gap-2 lg:gap-4">
           <NavigationMenu onMouseLeave={() => setHoveredIndex(null)}>
             <NavigationMenuList ref={navListRef} className="relative flex items-center gap-0">
               <div
@@ -128,11 +160,13 @@ export function Navbar() {
             </NavigationMenuList>
           </NavigationMenu>
 
+          <ThemeToggle />
+
           <div className="flex relative items-center bg-white hover:bg-gray-100 dark:text-black">
             <Input
               type="search"
               placeholder="SEARCH BY PART # OR KEYWORD"
-              className="peer h-5 md:h-7 rounded-none border border-black/20 border-r-0 pl-10 placeholder:text-xs lg:min-w-59"
+              className="peer h-5 md:h-7 rounded-none border border-black/20 border-r-0 pl-10 placeholder:text-xs xl:w-2xs"
             />
 
             <SearchIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -147,12 +181,24 @@ export function Navbar() {
           </Button>
         </div>
 
-        <Sheet open={open} onOpenChange={setOpen}>
-          <SheetTrigger asChild className="lg:hidden">
-            <Button variant="ghost" size="icon">
-              <Menu className="h-6 w-6" />
+        <Sheet
+          open={open}
+          onOpenChange={(val) => {
+            setOpen(val);
+            if (val) setSearchOpen(false);
+          }}
+        >
+          <div className="flex items-center gap-2 lg:hidden">
+            <Button variant="ghost" size="icon" onClick={() => setSearchOpen(true)}>
+              <SearchIcon className="h-5 w-5" />
             </Button>
-          </SheetTrigger>
+
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Menu className="h-6 w-6" />
+              </Button>
+            </SheetTrigger>
+          </div>
 
           <SheetContent side="right" className="w-75 sm:w-100">
             <SheetHeader className="sr-only">
@@ -160,12 +206,12 @@ export function Navbar() {
               <SheetDescription>Main navigation for mobile devices</SheetDescription>
             </SheetHeader>
 
-            <div className="flex flex-col gap-6 mt-15 h-full">
+            <div className="flex flex-col mt-15 h-full border-t border-black/20 dark:border-white/20">
               {navItems.map((item) => (
-                <div key={item.label} className="pl-10">
+                <div key={item.label} className="border-b border-black/20 dark:border-white/20">
                   <a
                     href={item.href}
-                    className="block text-lg font-medium hover:text-primary transition-colors"
+                    className="block text-lg font-medium hover:text-primary transition-colors py-3.5 pl-10"
                     onClick={() => setOpen(false)}
                   >
                     {item.label}
@@ -187,6 +233,8 @@ export function Navbar() {
                   )}
                 </div>
               ))}
+
+              <ThemeToggleMobile />
 
               <div className="flex justify-center mt-auto">
                 <Button
