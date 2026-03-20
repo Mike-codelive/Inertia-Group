@@ -69,7 +69,7 @@ export function HeroSection() {
     <section className="min-h-screen relative flex items-center justify-center text-foreground px-6">
       <div
         ref={bgRef}
-        className="absolute inset-0 -z-10 bg-center bg-cover"
+        className="absolute inset-0  bg-center bg-cover"
         style={{ backgroundImage: `url(${heroBg})` }}
       />
       <IntroText ref={svgRef} />

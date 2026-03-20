@@ -22,6 +22,7 @@ import { Menu, MoveRight, SearchIcon, X } from 'lucide-react';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { AuthDialog } from '@/components/auth/AuthDialog';
 import { ThemeToggle, ThemeToggleMobile } from '../theme/ThemeToggle';
+import { Link } from 'react-router-dom';
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
@@ -60,7 +61,7 @@ export function Navbar() {
   }, [hoveredIndex]);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
+    <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
       {searchOpen && (
         <div className="absolute inset-0 z-50 flex items-center bg-background px-6">
           <div className="flex w-full items-center">
@@ -92,11 +93,11 @@ export function Navbar() {
       )}
 
       <div className="container mx-auto flex h-16 items-center justify-between px-6">
-        <a href="/" className="flex items-center gap-2 font-semibold text-lg md:text-xl">
+        <Link to="/" className="flex items-center gap-2 font-semibold text-lg md:text-xl">
           <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-gray-950 font-bold">
             IG
           </div>
-        </a>
+        </Link>
 
         <div className="hidden lg:flex items-center md:gap-2 lg:gap-4">
           <NavigationMenu onMouseLeave={() => setHoveredIndex(null)}>
@@ -124,14 +125,14 @@ export function Navbar() {
                           {item.subItems.map((sub) => (
                             <li key={sub.label}>
                               <NavigationMenuLink asChild>
-                                <a
-                                  href={sub.href}
+                                <Link
+                                  to={sub.href}
                                   className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-transparent hover:text-accent-foreground"
                                 >
                                   <div className="text-sm font-medium leading-none">
                                     {sub.label}
                                   </div>
-                                </a>
+                                </Link>
                               </NavigationMenuLink>
                             </li>
                           ))}
@@ -140,8 +141,8 @@ export function Navbar() {
                     </>
                   ) : (
                     <NavigationMenuLink asChild>
-                      <a
-                        href={item.href}
+                      <Link
+                        to={item.href}
                         className={`${navigationMenuTriggerStyle()} bg-transparent hover:bg-transparent hover:text-foreground`}
                       >
                         <span
@@ -152,7 +153,7 @@ export function Navbar() {
                         >
                           {item.label}
                         </span>
-                      </a>
+                      </Link>
                     </NavigationMenuLink>
                   )}
                 </NavigationMenuItem>
@@ -209,25 +210,25 @@ export function Navbar() {
             <div className="flex flex-col mt-15 h-full border-t border-black/20 dark:border-white/20">
               {navItems.map((item) => (
                 <div key={item.label} className="border-b border-black/20 dark:border-white/20">
-                  <a
-                    href={item.href}
+                  <Link
+                    to={item.href}
                     className="block text-lg font-medium hover:text-primary transition-colors py-3.5 pl-10"
                     onClick={() => setOpen(false)}
                   >
                     {item.label}
-                  </a>
+                  </Link>
 
                   {item.subItems && (
                     <div className="ml-4 mt-2 flex flex-col gap-2">
                       {item.subItems.map((sub) => (
-                        <a
+                        <Link
                           key={sub.label}
-                          href={sub.href}
+                          to={sub.href}
                           className="text-sm text-muted-foreground hover:text-foreground"
                           onClick={() => setOpen(false)}
                         >
                           {sub.label}
-                        </a>
+                        </Link>
                       ))}
                     </div>
                   )}

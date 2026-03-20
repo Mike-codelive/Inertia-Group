@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { RouterProvider } from 'react-router-dom';
+import { router } from '@/routes/router';
 import { IntroOverlay } from '@/components/intro/IntroOverlay';
-import { RootLayout } from '@/layouts/RootLayout';
-import { HomePage } from '@/pages/home/HomePage';
 import { masterTimeline } from '@/animations/masterTimeline';
 import { useTheme } from '@/hooks/useTheme';
 import { useScrollLock } from './hooks/useScrollLock';
@@ -24,13 +24,13 @@ export default function App() {
     masterTimeline.play();
   }, []);
 
+  const appRouter = useMemo(() => router(true), []);
+
   return (
     <>
-      {/* {!introDone && <IntroOverlay onComplete={() => setIntroDone(true)} />} */}
+      {!introDone && <IntroOverlay onComplete={() => setIntroDone(true)} />}
 
-      <RootLayout isReady={true}>
-        <HomePage />
-      </RootLayout>
+      <RouterProvider router={appRouter} />
     </>
   );
 }
