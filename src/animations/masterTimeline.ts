@@ -8,4 +8,4 @@ masterTimeline
   .addLabel('introStart')
   .addLabel('introEnd')
   .addLabel('heroStart')
-  .addLabel('heroEnd')
+  .addLabel('heroEnd');

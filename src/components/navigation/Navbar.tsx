@@ -143,7 +143,7 @@ export function Navbar() {
                     <NavigationMenuLink asChild>
                       <Link
                         to={item.href}
-                        className={`${navigationMenuTriggerStyle()} bg-transparent hover:bg-transparent hover:text-foreground`}
+                        className={`${navigationMenuTriggerStyle()} bg-transparent focus:bg-transparent hover:bg-transparent hover:text-foreground`}
                       >
                         <span
                           ref={(el) => {
