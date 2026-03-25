@@ -3,6 +3,7 @@ import { RootLayout } from '@/layouts/RootLayout';
 import { HomePage } from '@/pages/home/Home';
 import { AboutPage } from '@/pages/about/About';
 import { ContactPage } from '@/pages/contact/Contact';
+import { ResourcesPage } from '@/pages/resources/Resources';
 
 export const router = (isReady: boolean) =>
   createBrowserRouter([
@@ -20,6 +21,10 @@ export const router = (isReady: boolean) =>
         {
           path: '/contact',
           element: <ContactPage />,
+        },
+        {
+          path: '/resources',
+          element: <ResourcesPage />,
         },
       ],
     },

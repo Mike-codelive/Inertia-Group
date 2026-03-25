@@ -2,7 +2,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className=" bg-red-600 text-gray-300 py-8">
+    <footer className="bg-red-600 py-8">
       <div className="container px-6 mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div>
@@ -12,13 +12,13 @@ export function Footer() {
               </div>
               <span className="text-xl font-semibold text-white">Inertia Group</span>
             </div>
-            <p className="text-sm">
+            <p className="text-sm text-white dark:text-white">
               High-performance connection systems: terminals, connectors, eyelets & seals.
             </p>
           </div>
 
-          <div>
-            <h4 className="text-white font-medium mb-4">Quick Links</h4>
+          <div className="text-white dark:text-white">
+            <p className="font-medium mb-4">Quick Links</p>
             <ul className="space-y-2 text-sm">
               <li>
                 <a href="/" className="hover:text-white transition-colors">
@@ -48,8 +48,8 @@ export function Footer() {
             </ul>
           </div>
 
-          <div>
-            <h4 className="text-white font-medium mb-4">Legal</h4>
+          <div className="text-white dark:text-white">
+            <p className="font-medium mb-4">Legal</p>
             <ul className="space-y-2 text-sm">
               <li>
                 <a href="/privacy" className="hover:text-white transition-colors">
@@ -70,7 +70,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="pt-6 text-center md:text-left text-sm">
+        <div className="text-white dark:text-white pt-6 text-center md:text-left text-sm">
           <p>© {currentYear} Inertia Group.</p>
         </div>
       </div>

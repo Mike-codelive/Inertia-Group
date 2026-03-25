@@ -8,22 +8,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { useForm } from 'react-hook-form';
+import { contactSchema, type ContactFormValues } from '@/schemas/contact.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-
-const contactSchema = z.object({
-  name: z.string().min(2, 'Name is required'),
-  email: z.string().email('Invalid email'),
-  phone: z.string().optional(),
-  company: z.string().min(2, 'Company is required'),
-  country: z.string().min(2, 'Country is required'),
-  region: z.string().min(1, 'Region is required'),
-  subject: z.string().min(1, 'Subject is required'),
-  message: z.string().min(10, 'Message must be at least 10 characters'),
-});
-
-type ContactFormValues = z.infer<typeof contactSchema>;
+import { useForm } from 'react-hook-form';
 
 export function ContactSection() {
   const form = useForm<ContactFormValues>({
@@ -65,26 +52,20 @@ export function ContactSection() {
             <h3 className="text-[clamp(1.125rem,2.2vw,1.75rem)] font-semibold">Contact Us</h3>
 
             <form
-              onSubmit={handleSubmit((data) => {
-                console.log('Demo submit', data);
-              })}
+              onSubmit={handleSubmit((data) => console.log('Demo submit', data))}
               className="flex flex-col gap-4"
             >
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-2">
                   <Label>
                     Name <span className="text-red-600">*</span>
                   </Label>
                   <Input
                     {...register('name')}
-                    className={`border ${
-                      errors.name ? 'border-red-600' : 'border-black/20 dark:border-white/20'
-                    }`}
+                    className={`border ${errors.name ? 'border-red-600' : 'border-black/20 dark:border-white/20'}`}
                     placeholder="Your name"
                   />
-                  {errors.name && (
-                    <span className="text-xs text-red-600">{errors.name.message}</span>
-                  )}
+                  <span className="block h-4 text-xs text-red-600">{errors.name?.message}</span>
                 </div>
 
                 <div className="flex flex-col gap-2">
@@ -94,19 +75,16 @@ export function ContactSection() {
                   <Input
                     type="email"
                     {...register('email')}
-                    className={`border ${
-                      errors.email ? 'border-red-600' : 'border-black/20 dark:border-white/20'
-                    }`}
+                    className={`border ${errors.email ? 'border-red-600' : 'border-black/20 dark:border-white/20'}`}
                     placeholder="E-MAIL"
                   />
-                  {errors.email && (
-                    <span className="text-xs text-red-600">{errors.email.message}</span>
-                  )}
+                  <span className="block h-4 text-xs text-red-600">{errors.email?.message}</span>
                 </div>
 
                 <div className="flex flex-col gap-2">
                   <Label>Phone</Label>
                   <Input {...register('phone')} placeholder="Phone" />
+                  <span className="block h-4 text-xs text-red-600" />
                 </div>
 
                 <div className="flex flex-col gap-2">
@@ -115,14 +93,10 @@ export function ContactSection() {
                   </Label>
                   <Input
                     {...register('company')}
-                    className={`border ${
-                      errors.company ? 'border-red-600' : 'border-black/20 dark:border-white/20'
-                    }`}
+                    className={`border ${errors.company ? 'border-red-600' : 'border-black/20 dark:border-white/20'}`}
                     placeholder="Company"
                   />
-                  {errors.company && (
-                    <span className="text-xs text-red-600">{errors.company.message}</span>
-                  )}
+                  <span className="block h-4 text-xs text-red-600">{errors.company?.message}</span>
                 </div>
 
                 <div className="flex flex-col gap-2">
@@ -131,29 +105,26 @@ export function ContactSection() {
                   </Label>
                   <Input
                     {...register('country')}
-                    className={`border ${
-                      errors.country ? 'border-red-600' : 'border-black/20 dark:border-white/20'
-                    }`}
+                    className={`border ${errors.country ? 'border-red-600' : 'border-black/20 dark:border-white/20'}`}
                     placeholder="Ex. Mexico"
                   />
-                  {errors.country && (
-                    <span className="text-xs text-red-600">{errors.country.message}</span>
-                  )}
+                  <span className="block h-4 text-xs text-red-600">{errors.country?.message}</span>
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <Label>
+                  <Label htmlFor="region">
                     Region <span className="text-red-600">*</span>
                   </Label>
                   <Select onValueChange={(value) => setValue('region', value)}>
                     <SelectTrigger
-                      className={`w-full h-10 rounded-none border text-sm ${
-                        errors.region ? 'border-red-600' : 'border-black/20 dark:border-white/20'
-                      }`}
+                      id="region"
+                      className={`w-full h-10 rounded-none border text-sm ${errors.region ? 'border-red-600' : 'border-black/20 dark:border-white/20'}`}
                     >
-                      <SelectValue placeholder="Select one from the list" />
+                      <SelectValue
+                        aria-label="select a region"
+                        placeholder="Select one from the list"
+                      />
                     </SelectTrigger>
-
                     <SelectContent className="rounded-none border border-black/20 dark:border-white/20">
                       <SelectItem
                         value="ASIA_PACIFIC"
@@ -181,9 +152,7 @@ export function ContactSection() {
                       </SelectItem>
                     </SelectContent>
                   </Select>
-                  {errors.region && (
-                    <span className="text-xs text-red-600">{errors.region.message}</span>
-                  )}
+                  <span className="block h-4 text-xs text-red-600">{errors.region?.message}</span>
                 </div>
               </div>
 
@@ -191,16 +160,13 @@ export function ContactSection() {
                 <Label>
                   Subject <span className="text-red-600">*</span>
                 </Label>
-
                 <Select onValueChange={(value) => setValue('subject', value)}>
                   <SelectTrigger
-                    className={`w-full h-10 rounded-none border text-sm ${
-                      errors.subject ? 'border-red-600' : 'border-black/20 dark:border-white/20'
-                    }`}
+                    aria-label="select a subject"
+                    className={`w-full h-10 rounded-none border text-sm ${errors.subject ? 'border-red-600' : 'border-black/20 dark:border-white/20'}`}
                   >
                     <SelectValue placeholder="SELECT ONE FROM THE LIST" />
                   </SelectTrigger>
-
                   <SelectContent className="rounded-none border border-black/20 dark:border-white/20">
                     <SelectItem
                       value="QUOTATION"
@@ -234,10 +200,7 @@ export function ContactSection() {
                     </SelectItem>
                   </SelectContent>
                 </Select>
-
-                {errors.subject && (
-                  <span className="text-xs text-red-600">{errors.subject.message}</span>
-                )}
+                <span className="block h-4 text-xs text-red-600">{errors.subject?.message}</span>
               </div>
 
               <div className="flex flex-col gap-2">
@@ -247,18 +210,14 @@ export function ContactSection() {
                 <textarea
                   {...register('message')}
                   rows={4}
-                  className={`border px-3 py-2 text-sm outline-none ${
-                    errors.message ? 'border-red-600' : 'border-black/20 dark:border-white/20'
-                  }`}
+                  className={`border px-3 py-2 text-sm outline-none ${errors.message ? 'border-red-600' : 'border-black/20 dark:border-white/20'}`}
                   placeholder="Please share more specific information..."
                 />
-                {errors.message && (
-                  <span className="text-xs text-red-600">{errors.message.message}</span>
-                )}
+                <span className="block h-4 text-xs text-red-600">{errors.message?.message}</span>
               </div>
 
               <Button type="submit" className="mt-2 bg-red-600 text-white hover:bg-red-700">
-                Submit
+                GET IN TOUCH WITH US
               </Button>
             </form>
           </div>

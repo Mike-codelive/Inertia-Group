@@ -16,10 +16,11 @@ export function CatalogSections() {
 
             <div className="absolute inset-0 bg-linear-to-b from-black/0 to-black/50" />
 
-            <CardHeader className="relative  z-10 text-white">
+            <CardHeader className="relative z-10 text-white">
               <CardTitle className="text-[2rem] flex justify-between items-center">
-                {section.title}{' '}
+                {section.title}
                 <Button
+                  aria-label={`explore ${section.title} section`}
                   type="button"
                   className="relative h-10 md:size-10.75 rounded-none bg-red-600 hover:bg-red-600 px-6 text-white"
                 >

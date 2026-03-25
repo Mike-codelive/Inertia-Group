@@ -20,7 +20,12 @@ export function ThemeToggle() {
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="border border-black/20 dark:border-white/20">
+        <Button
+          aria-label="change theme"
+          variant="ghost"
+          size="icon"
+          className="border border-black/20 dark:border-white/20"
+        >
           {getIcon()}
         </Button>
       </DropdownMenuTrigger>
@@ -50,10 +55,9 @@ export function ThemeToggleMobile() {
 
   return (
     <div className="px-10 mt-4">
-      {/* <p className="text-xs text-muted-foreground mb-2">Theme</p> */}
-
       <div className="flex items-center justify-center">
         <Button
+          aria-label="light theme"
           variant="ghost"
           size="icon"
           onClick={() => setTheme('light')}
@@ -63,6 +67,7 @@ export function ThemeToggleMobile() {
         </Button>
 
         <Button
+          aria-label="dark theme"
           variant="ghost"
           size="icon"
           onClick={() => setTheme('dark')}
@@ -72,6 +77,7 @@ export function ThemeToggleMobile() {
         </Button>
 
         <Button
+          aria-label="system theme"
           variant="ghost"
           size="icon"
           onClick={() => setTheme('system')}

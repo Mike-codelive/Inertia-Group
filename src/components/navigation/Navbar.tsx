@@ -66,6 +66,7 @@ export function Navbar() {
         <div className="absolute inset-0 z-50 flex items-center bg-background px-6">
           <div className="flex w-full items-center">
             <Button
+              aria-label="close search bar"
               variant="ghost"
               size="icon"
               onClick={() => setSearchOpen(false)}
@@ -84,7 +85,10 @@ export function Navbar() {
 
               <SearchIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
 
-              <Button className="h-10 rounded-none bg-red-600 px-4 hover:bg-red-700 text-white">
+              <Button
+                aria-label="submit search"
+                className="h-10 rounded-none bg-red-600 px-4 hover:bg-red-700 text-white"
+              >
                 <MoveRight className="size-5" />
               </Button>
             </div>
@@ -100,66 +104,69 @@ export function Navbar() {
         </Link>
 
         <div className="hidden lg:flex items-center md:gap-2 lg:gap-4">
-          <NavigationMenu onMouseLeave={() => setHoveredIndex(null)}>
-            <NavigationMenuList ref={navListRef} className="relative flex items-center gap-0">
-              <div
-                ref={barRef}
-                className="absolute bottom-0 h-0.5 bg-red-600 rounded-full pointer-events-none transition-all duration-300 ease-out opacity-0"
-                style={{ width: 0, left: 0 }}
-              />
-
-              {navItems.map((item, index) => (
-                <NavigationMenuItem
-                  key={item.label}
-                  onMouseEnter={() => setHoveredIndex(index)}
-                  className="relative"
-                >
-                  {item.subItems ? (
-                    <>
-                      <NavigationMenuTrigger className={navigationMenuTriggerStyle()}>
-                        {item.label}
-                      </NavigationMenuTrigger>
-
-                      <NavigationMenuContent>
-                        <ul className="grid w-100 gap-3 p-4 md:w-125 md:grid-cols-2 lg:w-150">
-                          {item.subItems.map((sub) => (
-                            <li key={sub.label}>
-                              <NavigationMenuLink asChild>
-                                <Link
-                                  to={sub.href}
-                                  className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-transparent hover:text-accent-foreground"
-                                >
-                                  <div className="text-sm font-medium leading-none">
-                                    {sub.label}
-                                  </div>
-                                </Link>
-                              </NavigationMenuLink>
-                            </li>
-                          ))}
-                        </ul>
-                      </NavigationMenuContent>
-                    </>
-                  ) : (
-                    <NavigationMenuLink asChild>
-                      <Link
-                        to={item.href}
-                        className={`${navigationMenuTriggerStyle()} bg-transparent focus:bg-transparent hover:bg-transparent hover:text-foreground`}
-                      >
-                        <span
-                          ref={(el) => {
-                            textRefs.current[index] = el;
-                          }}
-                          className="inline-block"
-                        >
+          <div className="relative">
+            <NavigationMenu onMouseLeave={() => setHoveredIndex(null)}>
+              <NavigationMenuList ref={navListRef} className="flex items-center gap-0">
+                {navItems.map((item, index) => (
+                  <NavigationMenuItem
+                    key={item.label}
+                    onMouseEnter={() => setHoveredIndex(index)}
+                    className="relative"
+                  >
+                    {item.subItems ? (
+                      <>
+                        <NavigationMenuTrigger className={navigationMenuTriggerStyle()}>
                           {item.label}
-                        </span>
-                      </Link>
-                    </NavigationMenuLink>
-                  )}
-                </NavigationMenuItem>
-              ))}
-            </NavigationMenuList>
-          </NavigationMenu>
+                        </NavigationMenuTrigger>
+
+                        <NavigationMenuContent>
+                          <ul className="grid w-100 gap-3 p-4 md:w-125 md:grid-cols-2 lg:w-150">
+                            {item.subItems.map((sub) => (
+                              <li key={sub.label}>
+                                <NavigationMenuLink asChild>
+                                  <Link
+                                    to={sub.href}
+                                    className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-transparent hover:text-accent-foreground"
+                                  >
+                                    <div className="text-sm font-medium leading-none">
+                                      {sub.label}
+                                    </div>
+                                  </Link>
+                                </NavigationMenuLink>
+                              </li>
+                            ))}
+                          </ul>
+                        </NavigationMenuContent>
+                      </>
+                    ) : (
+                      <NavigationMenuLink asChild>
+                        <Link
+                          to={item.href}
+                          className={`${navigationMenuTriggerStyle()} bg-transparent focus:bg-transparent hover:bg-transparent hover:text-foreground`}
+                        >
+                          <span
+                            ref={(el) => {
+                              textRefs.current[index] = el;
+                            }}
+                            className="inline-block"
+                          >
+                            {item.label}
+                          </span>
+                        </Link>
+                      </NavigationMenuLink>
+                    )}
+                  </NavigationMenuItem>
+                ))}
+              </NavigationMenuList>
+            </NavigationMenu>
+
+            <div
+              ref={barRef}
+              aria-hidden="true"
+              className="absolute bottom-0 h-0.5 bg-red-600 rounded-full pointer-events-none transition-all duration-300 ease-out opacity-0"
+              style={{ width: 0, left: 0 }}
+            />
+          </div>
 
           <ThemeToggle />
 
@@ -172,7 +179,10 @@ export function Navbar() {
 
             <SearchIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
 
-            <Button className="group relative h-5 md:h-7 rounded-none bg-red-600 px-6 hover:bg-red-700 text-white">
+            <Button
+              aria-label="submit search"
+              className="group relative h-5 md:h-7 rounded-none bg-red-600 px-6 hover:bg-red-700 text-white"
+            >
               <MoveRight className="size-5 transition-transform duration-200 ease-out group-hover:translate-x-1" />
             </Button>
           </div>
@@ -190,12 +200,17 @@ export function Navbar() {
           }}
         >
           <div className="flex items-center gap-2 lg:hidden">
-            <Button variant="ghost" size="icon" onClick={() => setSearchOpen(true)}>
+            <Button
+              aria-label="search"
+              variant="ghost"
+              size="icon"
+              onClick={() => setSearchOpen(true)}
+            >
               <SearchIcon className="h-5 w-5" />
             </Button>
 
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
+              <Button aria-label="open sidebar" variant="ghost" size="icon">
                 <Menu className="h-6 w-6" />
               </Button>
             </SheetTrigger>
