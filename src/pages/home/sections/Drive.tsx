@@ -1,3 +1,6 @@
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+
 export function Drive() {
   return (
     <section
@@ -17,12 +20,11 @@ export function Drive() {
       </div>
 
       <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:justify-center">
-        <a
-          href="#"
-          className="rounded-full bg-background px-8 py-4 text-base font-semibold text-foreground shadow-sm ring-1 ring-inset ring-border hover:bg-accent hover:text-accent-foreground transition-colors"
-        >
-          Learn About Our Solutions
-        </a>
+        <Link to="/about">
+          <Button className="px-8 py-4 font-semibold" variant={'ghost'}>
+            Learn About Our Solutions
+          </Button>
+        </Link>
       </div>
 
       <div className="mt-16 grid grid-cols-2 gap-8 text-center sm:grid-cols-4 lg:mt-20">

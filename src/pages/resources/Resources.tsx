@@ -47,42 +47,42 @@ export function ResourcesPage() {
           },
           {
             image: blogImage_2,
-            type: 'terminals',
-            title: 'MAK/MAS Series Terminals',
+            type: 'CONNECTORS',
+            title: 'Battery Interface System',
             description:
-              'The MAK and MAS series terminals with different configuration possibilities.MAK / MAS terminals are available from 0.5 mm terminal size up to 12 mm. Available for crimping and welding for wires or flat foil cable connection. By offering different cable ranges and different surface plating, this product series can be used for many sealed or unsealed applications.',
+              'Fully configurable solution for a common electric vehicle battery interface.          A single assembly that combines all connections to flow power in and out of the high voltage battery, designed for automated pack assembly. Shielded or unshielded version.',
             dateTime: '21 October 2024',
           },
           {
             image: blogImage_3,
-            type: 'terminals',
-            title: 'MAK/MAS Series Terminals',
+            type: 'CONNECTORS',
+            title: '48V Sealed Eyelet Connector',
             description:
-              'The MAK and MAS series terminals with different configuration possibilities.MAK / MAS terminals are available from 0.5 mm terminal size up to 12 mm. Available for crimping and welding for wires or flat foil cable connection. By offering different cable ranges and different surface plating, this product series can be used for many sealed or unsealed applications.',
+              'Sealed Eyelet ready for 48V connections e.g. OBC, HV Inverter and 48V Motor / Generator units. Ruggedized system for large cable applications. Ideal solution for 12 to 48V requiring sealed ring connections.',
             dateTime: '21 October 2024',
           },
           {
             image: blogImage_4,
-            type: 'terminals',
-            title: 'MAK/MAS Series Terminals',
+            type: 'EYELETS',
+            title: 'Eyelets / Ring Terminals',
             description:
-              'The MAK and MAS series terminals with different configuration possibilities.MAK / MAS terminals are available from 0.5 mm terminal size up to 12 mm. Available for crimping and welding for wires or flat foil cable connection. By offering different cable ranges and different surface plating, this product series can be used for many sealed or unsealed applications.',
+              'Grounding Expert. Eyelet product portfolio includes a wide spectrum of standard and customized ring terminal solutions. Various eyelet types and tailored configuration possibilities enable finding the best solution for a broad range of standard automotive 12V/24V applications as well as for 48V and electric vehicles. ',
             dateTime: '21 October 2024',
           },
           {
             image: blogImage_5,
-            type: 'terminals',
-            title: 'MAK/MAS Series Terminals',
+            type: 'CONNECTORS',
+            title: '1Way, 2W and 3W Pass Through High Voltage Solutions',
             description:
-              'The MAK and MAS series terminals with different configuration possibilities.MAK / MAS terminals are available from 0.5 mm terminal size up to 12 mm. Available for crimping and welding for wires or flat foil cable connection. By offering different cable ranges and different surface plating, this product series can be used for many sealed or unsealed applications.',
+              'Car manufacturers are offering more and more advanced vehicles, however they expect from their own suppliers simplicity and highly reliable solutions.',
             dateTime: '21 October 2024',
           },
           {
             image: blogImage_6,
-            type: 'terminals',
-            title: 'MAK/MAS Series Terminals',
+            type: 'CONNECTORS',
+            title: 'Busbars- BDU internal connection',
             description:
-              'The MAK and MAS series terminals with different configuration possibilities.MAK / MAS terminals are available from 0.5 mm terminal size up to 12 mm. Available for crimping and welding for wires or flat foil cable connection. By offering different cable ranges and different surface plating, this product series can be used for many sealed or unsealed applications.',
+              'High-quality engineering stamping components from Lear Connection Systems. Applied within BDU (Battery Disconnected Unit) pack, a component of the Cell Pack connection system for EV. Provides a high-electrical performance with extended high mechanical advantage.',
             dateTime: '21 October 2024',
           },
         ]}
