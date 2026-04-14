@@ -29,7 +29,6 @@
     "types": ["@testing-library/jest-dom", "node", "vite-plugin-svgr/client"],
 
     // === shadcn/ui === //
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }

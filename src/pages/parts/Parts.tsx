@@ -13,7 +13,7 @@ export function PartsPage() {
           </p>
           <div className="w-full flex justify-center mt-5">
             <Link className="w-full" to="/catalog">
-              <Button className="group w-full flex justify-around items-center gap-25 text-sm font-medium rounded-none bg-red-600 hover:bg-red-700 py-6 text-white transition-colors select-none ">
+              <Button className="group cursor-pointer w-full flex justify-around items-center gap-25 text-sm font-medium rounded-none bg-red-600 hover:bg-red-700 py-6 text-white transition-colors select-none ">
                 Browse Catalog
                 <MoveRight className="group-hover:translate-x-1 transition-transform duration-200 size-5" />
               </Button>

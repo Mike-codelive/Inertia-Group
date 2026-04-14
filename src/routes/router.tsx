@@ -8,6 +8,7 @@ import { AboutPage } from '@/pages/about/About';
 import { ContactPage } from '@/pages/contact/Contact';
 import { ResourcesPage } from '@/pages/resources/Resources';
 import { PartsPage } from '@/pages/parts/Parts';
+import { SearchPage } from '@/pages/search/Search';
 
 export const router = (isReady: boolean) =>
   createBrowserRouter([
@@ -38,6 +39,10 @@ export const router = (isReady: boolean) =>
         {
           element: <NoFooterLayout />,
           children: [
+            {
+              path: '/search',
+              element: <SearchPage />,
+            },
             {
               path: '/saved-parts',
               element: <PartsPage />,

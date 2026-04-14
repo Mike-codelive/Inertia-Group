@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -18,11 +17,12 @@ import {
   SheetDescription,
 } from '@/components/ui/sheet';
 import { navItems } from '@/data/navigation';
-import { Menu, MoveRight, SearchIcon, X } from 'lucide-react';
+import { Menu, SearchIcon, X } from 'lucide-react';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { AuthDialog } from '@/components/auth/AuthDialog';
 import { ThemeToggle, ThemeToggleMobile } from '../theme/ThemeToggle';
 import { Link } from 'react-router-dom';
+import { SearchBar } from '@/components/search/SearchBar';
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
@@ -74,24 +74,7 @@ export function Navbar() {
             >
               <X />
             </Button>
-
-            <div className="flex relative items-center w-full bg-white hover:bg-gray-100 dark:text-black">
-              <Input
-                autoFocus
-                type="search"
-                placeholder="SEARCH BY PART # OR KEYWORD"
-                className="h-10 rounded-none border border-black/20 border-r-0 pl-10 placeholder:text-xs w-full"
-              />
-
-              <SearchIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-
-              <Button
-                aria-label="submit search"
-                className="h-10 rounded-none bg-red-600 px-4 hover:bg-red-700 text-white"
-              >
-                <MoveRight className="size-5" />
-              </Button>
-            </div>
+            <SearchBar variant="navbar" />
           </div>
         </div>
       )}
@@ -170,22 +153,7 @@ export function Navbar() {
 
           <ThemeToggle />
 
-          <div className="flex relative items-center bg-white hover:bg-gray-100 dark:text-black">
-            <Input
-              type="search"
-              placeholder="SEARCH BY PART # OR KEYWORD"
-              className="peer h-5 md:h-7 rounded-none border border-black/20 border-r-0 pl-10 placeholder:text-xs xl:w-2xs"
-            />
-
-            <SearchIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-
-            <Button
-              aria-label="submit search"
-              className="group relative h-5 md:h-7 rounded-none bg-red-600 px-6 hover:bg-red-700 text-white"
-            >
-              <MoveRight className="size-5 transition-transform duration-200 ease-out group-hover:translate-x-1" />
-            </Button>
-          </div>
+          <SearchBar variant="navbar" />
 
           <Button variant="outline" onClick={() => setLoginOpen(true)}>
             LOG IN / SIGN UP

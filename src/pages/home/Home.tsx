@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { HeroSection } from './sections/Hero';
 import { Resources } from './sections/Resources';
-import { Search } from './sections/Search';
 import { CatalogSections } from './sections/Catalog';
 import { Drive } from './sections/Drive';
+import { SearchBar } from '@/components/search/SearchBar';
 
 export function HomePage() {
   useEffect(() => {
@@ -17,7 +17,7 @@ export function HomePage() {
     <>
       <HeroSection />
       <Resources />
-      <Search />
+      <SearchBar />
       <CatalogSections />
       <Drive />
     </>
