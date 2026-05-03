@@ -1,0 +1,52 @@
+import { useState } from 'react';
+import { productCatalog } from '@/data/productCatalog';
+import { CatalogCard } from '@/components/catalog/CatalogCard';
+import { searchCatalog } from '@/lib/searchCatalog';
+import { MoveRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+
+const ITEMS_PER_PAGE = 12;
+
+type Props = {
+  query: string;
+};
+
+export function SearchResults({ query }: Props) {
+  const filtered = searchCatalog(productCatalog, query);
+  const count = filtered.length;
+
+  const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
+
+  const visibleItems = filtered.slice(0, visibleCount);
+
+  return (
+    <div className="container mx-auto px-6 py-16">
+      <p className="text-sm text-muted-foreground mb-2">RESULTS FOR</p>
+
+      <h1 className="text-3xl font-semibold mb-4">{query ? `"${query}"` : 'ALL PRODUCTS'}</h1>
+
+      <p className="text-sm text-muted-foreground mb-10">
+        {count} {count === 1 ? 'match' : 'matches'} found
+      </p>
+
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {visibleItems.map((item) => (
+          <CatalogCard key={item.id} item={item} />
+        ))}
+      </div>
+
+      {visibleCount < count && (
+        <div className="flex justify-center mt-12">
+          <Button
+            variant="cta"
+            onClick={() => setVisibleCount((prev) => prev + ITEMS_PER_PAGE)}
+            className="group cursor-pointer flex justify-between items-center gap-20 text-sm font-medium px-6 transition-colors select-none"
+          >
+            LOAD MORE
+            <MoveRight className="group-hover:translate-x-1 transition-transform duration-200 size-5" />
+          </Button>
+        </div>
+      )}
+    </div>
+  );
+}

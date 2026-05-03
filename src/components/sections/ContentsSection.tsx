@@ -74,7 +74,7 @@ export function ContentsSection({
         {variant === 'default' && (
           <div className="hidden lg:block">
             <div className="sticky top-24">
-              <h3 className="text-sm font-semibold mb-4 uppercase tracking-wide">Contents</h3>
+              <h1 className="text-sm font-semibold mb-4 uppercase tracking-wide">Contents</h1>
 
               <nav className="flex flex-col gap-3">
                 {sections.map((section) => (
@@ -117,7 +117,7 @@ export function ContentsSection({
         {variant === 'default' && (
           <div className="flex flex-col gap-24">
             {sections.map((section) => (
-              <div key={section.id} id={section.id}>
+              <div className="scroll-mt-20" key={section.id} id={section.id}>
                 {section.content}
               </div>
             ))}

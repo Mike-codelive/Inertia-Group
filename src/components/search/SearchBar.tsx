@@ -15,6 +15,7 @@ export function SearchBar({ variant = 'default' }: SearchBarProps) {
   const handleSearch = () => {
     if (!query.trim()) return;
     navigate(`/search?q=${encodeURIComponent(query)}`);
+    setQuery('');
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -36,10 +37,11 @@ export function SearchBar({ variant = 'default' }: SearchBarProps) {
         <SearchIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
 
         <Button
+          variant="cta"
           type="button"
           onClick={handleSearch}
           aria-label="submit search"
-          className="group relative h-10 lg:h-7 rounded-none bg-red-600 px-4 lg:px-6 hover:bg-red-700 text-white"
+          className="group relative h-10 lg:h-7 px-4 lg:px-6"
         >
           <MoveRight className="size-5 transition-transform duration-200 ease-out group-hover:translate-x-1" />
         </Button>

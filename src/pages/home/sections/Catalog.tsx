@@ -20,9 +20,10 @@ export function CatalogSections() {
               <CardTitle className="text-[2rem] flex justify-between items-center">
                 {section.title}
                 <Button
+                  variant="cta"
                   aria-label={`explore ${section.title} section`}
                   type="button"
-                  className="relative h-10 md:size-10.75 rounded-none bg-red-600 hover:bg-red-600 px-6 text-white"
+                  className="relative h-10 md:size-10.75 rounded-none px-6"
                 >
                   <MoveRight className="size-5 transition-transform duration-200 ease-out group-hover:translate-x-1" />
                 </Button>

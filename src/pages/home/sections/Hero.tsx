@@ -43,20 +43,6 @@ export function HeroSection() {
         0.8
       );
 
-      const isDark = document.documentElement.classList.contains('dark');
-
-      if (!isDark) {
-        tl.to(
-          svgRef.current,
-          {
-            color: '#ffffff',
-            duration: 2,
-            ease: 'power2.out',
-          },
-          0.8
-        );
-      }
-
       masterTimeline.add(tl, 'introEnd-=1.5');
 
       masterTimeline.addLabel('heroEnd');
@@ -66,12 +52,13 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="min-h-screen relative flex items-center justify-center text-foreground px-6">
+    <section className="min-h-screen relative flex items-center justify-center text-white px-6">
       <div
         ref={bgRef}
         className="absolute inset-0  bg-center bg-cover"
         style={{ backgroundImage: `url(${heroBg})` }}
       />
+      <div className="absolute inset-0 bg-[rgb(29_66_138/0.4)]" />
       <IntroText ref={svgRef} />
     </section>
   );

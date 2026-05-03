@@ -11,13 +11,18 @@ export function PartsPage() {
           <p className="text-center">
             Go to the catalog and find the parts <br /> you're interested in
           </p>
-          <div className="w-full flex justify-center mt-5">
-            <Link className="w-full" to="/catalog">
-              <Button className="group cursor-pointer w-full flex justify-around items-center gap-25 text-sm font-medium rounded-none bg-red-600 hover:bg-red-700 py-6 text-white transition-colors select-none ">
-                Browse Catalog
-                <MoveRight className="group-hover:translate-x-1 transition-transform duration-200 size-5" />
-              </Button>
-            </Link>
+          <div className="w-full flex justify-center mt-5 md:h-13.5">
+            <Button
+              variant="cta"
+              className="group cursor-pointer w-full h-full text-sm font-medium p-0 rounded-none transition-colors select-none"
+            >
+              <Link className="w-full h-full" to="/search">
+                <div className="h-full py-3 flex justify-between items-center text-sm md:text-lg px-6">
+                  <span>Browse Catalog</span>
+                  <MoveRight className="group-hover:translate-x-1 transition-transform duration-200 size-5 md:size-7" />
+                </div>
+              </Link>
+            </Button>
           </div>
         </div>
       </section>

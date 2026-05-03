@@ -24,7 +24,7 @@ export function ThemeToggle() {
           aria-label="change theme"
           variant="ghost"
           size="icon"
-          className="border border-black/20 dark:border-white/20"
+          className="border border-black/20 dark:border-white/20 focus:bg-transparent focus:outline-none focus-visible:ring-0"
         >
           {getIcon()}
         </Button>
