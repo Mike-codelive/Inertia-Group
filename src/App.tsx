@@ -4,7 +4,7 @@ import { router } from '@/routes/router';
 import { IntroOverlay } from '@/components/intro/IntroOverlay';
 import { masterTimeline } from '@/animations/masterTimeline';
 import { useTheme } from '@/hooks/useTheme';
-import { useScrollLock } from './hooks/useScrollLock';
+import { useScrollLock } from '@/hooks/useScrollLock';
 
 export default function App() {
   const [introDone, setIntroDone] = useState(false);
@@ -28,7 +28,7 @@ export default function App() {
 
   return (
     <>
-      {!introDone && <IntroOverlay onComplete={() => setIntroDone(true)} />}
+      {introDone && <IntroOverlay onComplete={() => setIntroDone(true)} />}
 
       <RouterProvider router={appRouter} />
     </>

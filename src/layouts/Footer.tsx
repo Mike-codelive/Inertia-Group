@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
@@ -21,29 +23,29 @@ export function Footer() {
             <p className="font-medium mb-4">Quick Links</p>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="/" className="hover:text-white transition-colors">
+                <Link to="/" className="hover:text-white transition-colors">
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/catalog" className="hover:text-white transition-colors">
+                <Link to="/search" className="hover:text-white transition-colors">
                   Catalog
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/resources" className="hover:text-white transition-colors">
+                <Link to="/resources" className="hover:text-white transition-colors">
                   Resources
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/about" className="hover:text-white transition-colors">
+                <Link to="/about" className="hover:text-white transition-colors">
                   About
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/contact" className="hover:text-white transition-colors">
+                <Link to="/contact" className="hover:text-white transition-colors">
                   Contact
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -52,19 +54,19 @@ export function Footer() {
             <p className="font-medium mb-4">Legal</p>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="/privacy" className="hover:text-white transition-colors">
+                <button className="hover:text-white transition-colors cursor-pointer">
                   Privacy Policy
-                </a>
+                </button>
               </li>
               <li>
-                <a href="/terms" className="hover:text-white transition-colors">
+                <button className="hover:text-white transition-colors cursor-pointer">
                   Terms of Use
-                </a>
+                </button>
               </li>
               <li>
-                <a href="/cookies" className="hover:text-white transition-colors">
+                <button className="hover:text-white transition-colors cursor-pointer">
                   Cookie Policy
-                </a>
+                </button>
               </li>
             </ul>
           </div>

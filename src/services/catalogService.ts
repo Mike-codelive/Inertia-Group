@@ -3,6 +3,6 @@ import type { CatalogItem } from '@/types/catalog';
 
 export async function getCatalog(): Promise<CatalogItem[]> {
   return new Promise((resolve) => {
-    setTimeout(() => resolve(productCatalog), 300);
+    setTimeout(() => resolve(productCatalog), 500);
   });
 }

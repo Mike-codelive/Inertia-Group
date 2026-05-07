@@ -21,7 +21,7 @@ export function Drive() {
 
       <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:justify-center">
         <Link to="/about">
-          <Button className="px-8 py-4 font-semibold" variant={'ghost'}>
+          <Button className="px-8 py-4 font-semibold cursor-pointer" variant="cta">
             Learn About Our Solutions
           </Button>
         </Link>

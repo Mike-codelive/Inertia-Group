@@ -21,7 +21,7 @@ import { Menu, SearchIcon, X } from 'lucide-react';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { AuthDialog } from '@/components/auth/AuthDialog';
 import { ThemeToggle, ThemeToggleMobile } from '../theme/ThemeToggle';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { SearchBar } from '@/components/search/SearchBar';
 
 export function Navbar() {
@@ -33,6 +33,10 @@ export function Navbar() {
   const navListRef = useRef<HTMLUListElement>(null);
   const textRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const barRef = useRef<HTMLDivElement>(null);
+
+  const location = useLocation();
+
+  const isSearchPage = location.pathname === '/search';
 
   useLayoutEffect(() => {
     const bar = barRef.current;
@@ -61,7 +65,13 @@ export function Navbar() {
   }, [hoveredIndex]);
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
+    <header
+      className={`sticky top-0 z-40 w-full border-b ${
+        isSearchPage
+          ? 'bg-background'
+          : 'bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60'
+      }`}
+    >
       {searchOpen && (
         <div className="absolute inset-0 z-50 flex items-center bg-background px-6">
           <div className="flex w-full items-center">
