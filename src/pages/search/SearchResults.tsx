@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import { useCatalog } from '@/hooks/useCatalog';
 import { Spinner } from '@/components/ui/spinner';
 import { NoResults } from '@/components/search/NoResults';
+import { SearchSidebar } from '@/components/search/SearchSidebar';
+import type { CatalogFilters } from '@/types/search';
 
 const ITEMS_PER_PAGE = 12;
 
@@ -15,14 +17,33 @@ type Props = {
 function SearchResultsContent({ query }: Props) {
   const { data = [], loading } = useCatalog(query);
 
-  const count = data.length;
-
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
 
-  const visibleItems = data.slice(0, visibleCount);
+  const [filters, setFilters] = useState<CatalogFilters>({
+    categories: [],
+    productFamilies: [],
+  });
+
+  const categories = [...new Set(data.map((item) => item.category))];
+
+  const productFamilies = [...new Set(data.map((item) => item.productFamily))];
+
+  const filteredItems = data.filter((item) => {
+    const categoryMatch =
+      filters.categories.length === 0 || filters.categories.includes(item.category);
+
+    const familyMatch =
+      filters.productFamilies.length === 0 || filters.productFamilies.includes(item.productFamily);
+
+    return categoryMatch && familyMatch;
+  });
+
+  const count = filteredItems.length;
+
+  const visibleItems = filteredItems.slice(0, visibleCount);
 
   return (
-    <div className="container h-[calc(100dvh-65px)] mx-auto px-6">
+    <div className="container mx-auto min-h-[calc(100dvh-120px)] px-6">
       {loading ? (
         <div className="flex h-[calc(100dvh-65px)] items-center justify-center">
           <Button disabled size="sm">
@@ -31,42 +52,60 @@ function SearchResultsContent({ query }: Props) {
           </Button>
         </div>
       ) : (
-        <div className="h-full">
-          <div className="chunck-1 sticky top-16.25 z-30 border-b bg-background py-4 pl-1">
-            <p className="text-sm text-muted-foreground">
-              <span>RESULTS {query ? `FOR ${query}` : ''}</span>
-              <span className="ml-3 text-sm font-light text-gray-700 dark:text-gray-300">
-                {count}
-              </span>
-            </p>
+        <div className="relative">
+          <div className="fixed top-16.25 left-0 right-0 z-30 border-b bg-background">
+            <div className="container mx-auto px-6 py-4">
+              <p className="text-sm text-muted-foreground">
+                <span>RESULTS {query ? `FOR ${query}` : ''}</span>
+
+                <span className="ml-3 text-sm font-light text-gray-700 dark:text-gray-300">
+                  {count}
+                </span>
+              </p>
+            </div>
           </div>
 
-          {count === 0 ? (
-            <div className=" h-[calc(100%-52.8px)]">
-              <NoResults query={query} />
-            </div>
-          ) : (
-            <>
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {visibleItems.map((item) => (
-                  <CatalogCard key={item.id} item={item} />
-                ))}
+          <div className="mt-29 md:grid grid-cols-[240px_1fr] gap-10">
+            <div className="hidden md:block relative">
+              <div className="fixed top-29 bottom-0 pt-5 w-60 border-r">
+                <SearchSidebar
+                  filters={filters}
+                  setFilters={setFilters}
+                  categories={categories}
+                  productFamilies={productFamilies}
+                />
               </div>
+            </div>
 
-              {visibleCount < count && (
-                <div className="py-12 flex justify-center">
-                  <Button
-                    variant="cta"
-                    onClick={() => setVisibleCount((prev) => prev + ITEMS_PER_PAGE)}
-                    className="group flex items-center justify-between gap-20 px-6 text-sm font-medium transition-colors select-none"
-                  >
-                    LOAD MORE
-                    <MoveRight className="size-5 transition-transform duration-200 group-hover:translate-x-1" />
-                  </Button>
+            <div className="min-w-0">
+              {count === 0 ? (
+                <div className="flex min-h-[calc(100dvh-180px)] items-center justify-center">
+                  <NoResults query={query} />
                 </div>
+              ) : (
+                <>
+                  <div className="mt-5 grid gap-6 min-[0px]:grid-cols-1 min-[1025px]:grid-cols-2 xl:grid-cols-3">
+                    {visibleItems.map((item) => (
+                      <CatalogCard key={item.id} item={item} />
+                    ))}
+                  </div>
+
+                  {visibleCount < count && (
+                    <div className="flex justify-center py-12">
+                      <Button
+                        variant="cta"
+                        onClick={() => setVisibleCount((prev) => prev + ITEMS_PER_PAGE)}
+                        className="group flex items-center justify-between gap-20 px-6 text-sm font-medium transition-colors select-none"
+                      >
+                        LOAD MORE
+                        <MoveRight className="size-5 transition-transform duration-200 group-hover:translate-x-1" />
+                      </Button>
+                    </div>
+                  )}
+                </>
               )}
-            </>
-          )}
+            </div>
+          </div>
         </div>
       )}
     </div>
