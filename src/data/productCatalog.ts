@@ -3,6 +3,7 @@ import type { CatalogItem } from '@/types/catalog';
 export const productCatalog: CatalogItem[] = [
   {
     id: '1',
+    slug: 'connector-a1',
     name: 'Connector A1',
     category: 'Connectors',
     image: '/products/connectors/connector_1.webp',
@@ -14,6 +15,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '2',
+    slug: 'connector-b2',
     name: 'Connector B2',
     category: 'Connectors',
     image: '/products/connectors/connector_1.webp',
@@ -25,6 +27,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '3',
+    slug: 'connector-c3',
     name: 'Connector C3',
     category: 'Connectors',
     image: '/products/connectors/connector_1.webp',
@@ -36,6 +39,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '4',
+    slug: 'connector-d4',
     name: 'Connector D4',
     category: 'Connectors',
     image: '/products/connectors/connector_1.webp',
@@ -47,6 +51,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '5',
+    slug: 'connector-e5',
     name: 'Connector E5',
     category: 'Connectors',
     image: '/products/connectors/connector_1.webp',
@@ -58,6 +63,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '6',
+    slug: 'connector-f6',
     name: 'Connector F6',
     category: 'Connectors',
     image: '/products/connectors/connector_1.webp',
@@ -69,6 +75,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '7',
+    slug: 'connector-g7',
     name: 'Connector G7',
     category: 'Connectors',
     image: '/products/connectors/connector_1.webp',
@@ -80,6 +87,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '8',
+    slug: 'connector-h8',
     name: 'Connector H8',
     category: 'Connectors',
     image: '/products/connectors/connector_1.webp',
@@ -91,6 +99,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '9',
+    slug: 'connector-i9',
     name: 'Connector I9',
     category: 'Connectors',
     image: '/products/connectors/connector_1.webp',
@@ -102,6 +111,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '10',
+    slug: 'connector-j10',
     name: 'Connector J10',
     category: 'Connectors',
     image: '/products/connectors/connector_1.webp',
@@ -111,9 +121,9 @@ export const productCatalog: CatalogItem[] = [
     terminalSize: 2.5,
     sealable: true,
   },
-
   {
     id: '11',
+    slug: 'eyelet-a1',
     name: 'Eyelet A1',
     category: 'Eyelets',
     image: '/products/eyelets/eyelet_1.webp',
@@ -125,6 +135,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '12',
+    slug: 'eyelet-b2',
     name: 'Eyelet B2',
     category: 'Eyelets',
     image: '/products/eyelets/eyelet_1.webp',
@@ -136,6 +147,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '13',
+    slug: 'eyelet-c3',
     name: 'Eyelet C3',
     category: 'Eyelets',
     image: '/products/eyelets/eyelet_1.webp',
@@ -147,6 +159,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '14',
+    slug: 'eyelet-d4',
     name: 'Eyelet D4',
     category: 'Eyelets',
     image: '/products/eyelets/eyelet_1.webp',
@@ -158,6 +171,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '15',
+    slug: 'eyelet-e5',
     name: 'Eyelet E5',
     category: 'Eyelets',
     image: '/products/eyelets/eyelet_1.webp',
@@ -169,6 +183,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '16',
+    slug: 'eyelet-f6',
     name: 'Eyelet F6',
     category: 'Eyelets',
     image: '/products/eyelets/eyelet_1.webp',
@@ -180,6 +195,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '17',
+    slug: 'eyelet-g7',
     name: 'Eyelet G7',
     category: 'Eyelets',
     image: '/products/eyelets/eyelet_1.webp',
@@ -191,6 +207,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '18',
+    slug: 'eyelet-h8',
     name: 'Eyelet H8',
     category: 'Eyelets',
     image: '/products/eyelets/eyelet_1.webp',
@@ -202,6 +219,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '19',
+    slug: 'eyelet-i9',
     name: 'Eyelet I9',
     category: 'Eyelets',
     image: '/products/eyelets/eyelet_1.webp',
@@ -213,6 +231,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '20',
+    slug: 'eyelet-j10',
     name: 'Eyelet J10',
     category: 'Eyelets',
     image: '/products/eyelets/eyelet_1.webp',
@@ -222,9 +241,9 @@ export const productCatalog: CatalogItem[] = [
     terminalSize: 1.7,
     sealable: false,
   },
-
   {
     id: '21',
+    slug: 'seal-a1',
     name: 'Seal A1',
     category: 'Seals',
     image: '/products/seals/seal_1.webp',
@@ -236,6 +255,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '22',
+    slug: 'seal-b2',
     name: 'Seal B2',
     category: 'Seals',
     image: '/products/seals/seal_1.webp',
@@ -247,6 +267,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '23',
+    slug: 'seal-c3',
     name: 'Seal C3',
     category: 'Seals',
     image: '/products/seals/seal_1.webp',
@@ -258,6 +279,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '24',
+    slug: 'seal-d4',
     name: 'Seal D4',
     category: 'Seals',
     image: '/products/seals/seal_1.webp',
@@ -269,6 +291,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '25',
+    slug: 'seal-e5',
     name: 'Seal E5',
     category: 'Seals',
     image: '/products/seals/seal_1.webp',
@@ -280,6 +303,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '26',
+    slug: 'seal-f6',
     name: 'Seal F6',
     category: 'Seals',
     image: '/products/seals/seal_1.webp',
@@ -291,6 +315,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '27',
+    slug: 'seal-g7',
     name: 'Seal G7',
     category: 'Seals',
     image: '/products/seals/seal_1.webp',
@@ -302,6 +327,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '28',
+    slug: 'seal-h8',
     name: 'Seal H8',
     category: 'Seals',
     image: '/products/seals/seal_1.webp',
@@ -313,6 +339,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '29',
+    slug: 'seal-i9',
     name: 'Seal I9',
     category: 'Seals',
     image: '/products/seals/seal_1.webp',
@@ -324,6 +351,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '30',
+    slug: 'seal-j10',
     name: 'Seal J10',
     category: 'Seals',
     image: '/products/seals/seal_1.webp',
@@ -333,9 +361,9 @@ export const productCatalog: CatalogItem[] = [
     terminalSize: 1.4,
     sealable: true,
   },
-
   {
     id: '31',
+    slug: 'terminal-a1',
     name: 'Terminal A1',
     category: 'Terminals',
     image: '/products/terminals/terminal_1.webp',
@@ -347,6 +375,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '32',
+    slug: 'terminal-b2',
     name: 'Terminal B2',
     category: 'Terminals',
     image: '/products/terminals/terminal_1.webp',
@@ -358,6 +387,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '33',
+    slug: 'terminal-c3',
     name: 'Terminal C3',
     category: 'Terminals',
     image: '/products/terminals/terminal_1.webp',
@@ -369,6 +399,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '34',
+    slug: 'terminal-d4',
     name: 'Terminal D4',
     category: 'Terminals',
     image: '/products/terminals/terminal_1.webp',
@@ -380,6 +411,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '35',
+    slug: 'terminal-e5',
     name: 'Terminal E5',
     category: 'Terminals',
     image: '/products/terminals/terminal_1.webp',
@@ -391,6 +423,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '36',
+    slug: 'terminal-f6',
     name: 'Terminal F6',
     category: 'Terminals',
     image: '/products/terminals/terminal_1.webp',
@@ -402,6 +435,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '37',
+    slug: 'terminal-g7',
     name: 'Terminal G7',
     category: 'Terminals',
     image: '/products/terminals/terminal_1.webp',
@@ -413,6 +447,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '38',
+    slug: 'terminal-h8',
     name: 'Terminal H8',
     category: 'Terminals',
     image: '/products/terminals/terminal_1.webp',
@@ -424,6 +459,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '39',
+    slug: 'terminal-i9',
     name: 'Terminal I9',
     category: 'Terminals',
     image: '/products/terminals/terminal_1.webp',
@@ -435,6 +471,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '40',
+    slug: 'terminal-j10',
     name: 'Terminal J10',
     category: 'Terminals',
     image: '/products/terminals/terminal_1.webp',
@@ -444,9 +481,9 @@ export const productCatalog: CatalogItem[] = [
     terminalSize: 1.7,
     sealable: false,
   },
-
   {
     id: '41',
+    slug: 'connector-k11',
     name: 'Connector K11',
     category: 'Connectors',
     image: '/products/connectors/connector_1.webp',
@@ -458,6 +495,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '42',
+    slug: 'connector-l12',
     name: 'Connector L12',
     category: 'Connectors',
     image: '/products/connectors/connector_1.webp',
@@ -469,6 +507,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '43',
+    slug: 'eyelet-k11',
     name: 'Eyelet K11',
     category: 'Eyelets',
     image: '/products/eyelets/eyelet_1.webp',
@@ -480,6 +519,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '44',
+    slug: 'seal-k11',
     name: 'Seal K11',
     category: 'Seals',
     image: '/products/seals/seal_1.webp',
@@ -491,6 +531,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '45',
+    slug: 'terminal-k11',
     name: 'Terminal K11',
     category: 'Terminals',
     image: '/products/terminals/terminal_1.webp',
@@ -502,6 +543,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '46',
+    slug: 'connector-m13',
     name: 'Connector M13',
     category: 'Connectors',
     image: '/products/connectors/connector_1.webp',
@@ -513,6 +555,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '47',
+    slug: 'eyelet-l12',
     name: 'Eyelet L12',
     category: 'Eyelets',
     image: '/products/eyelets/eyelet_1.webp',
@@ -524,6 +567,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '48',
+    slug: 'seal-l12',
     name: 'Seal L12',
     category: 'Seals',
     image: '/products/seals/seal_1.webp',
@@ -535,6 +579,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '49',
+    slug: 'terminal-l12',
     name: 'Terminal L12',
     category: 'Terminals',
     image: '/products/terminals/terminal_1.webp',
@@ -546,6 +591,7 @@ export const productCatalog: CatalogItem[] = [
   },
   {
     id: '50',
+    slug: 'connector-n14',
     name: 'Connector N14',
     category: 'Connectors',
     image: '/products/connectors/connector_1.webp',

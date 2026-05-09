@@ -66,7 +66,7 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 z-40 w-full border-b ${
+      className={`fixed top-0 z-40 w-full border-b no-print ${
         isSearchPage
           ? 'bg-background'
           : 'bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60'

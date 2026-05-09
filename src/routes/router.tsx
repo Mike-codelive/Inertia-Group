@@ -1,13 +1,14 @@
-import { createBrowserRouter } from 'react-router-dom';
-import { RootLayout } from '@/layouts/RootLayout';
 import { MainLayout } from '@/layouts/MainLayout';
 import { NoFooterLayout } from '@/layouts/NoFooterLayout';
+import { RootLayout } from '@/layouts/RootLayout';
+import { createBrowserRouter } from 'react-router-dom';
 
-import { HomePage } from '@/pages/home/Home';
 import { AboutPage } from '@/pages/about/About';
 import { ContactPage } from '@/pages/contact/Contact';
-import { ResourcesPage } from '@/pages/resources/Resources';
+import { HomePage } from '@/pages/home/Home';
 import { PartsPage } from '@/pages/parts/Parts';
+import { ProductDetailsPage } from '@/pages/product/ProductDetails';
+import { ResourcesPage } from '@/pages/resources/Resources';
 import { SearchPage } from '@/pages/search/Search';
 
 export const router = (isReady: boolean) =>
@@ -33,6 +34,10 @@ export const router = (isReady: boolean) =>
             {
               path: '/resources',
               element: <ResourcesPage />,
+            },
+            {
+              path: '/catalog/:category/:slug',
+              element: <ProductDetailsPage />,
             },
           ],
         },
