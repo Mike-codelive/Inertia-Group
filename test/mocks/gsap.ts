@@ -14,6 +14,8 @@
 // export default gsapMock;
 
 const timelineInstance = {
+  add: jest.fn().mockReturnThis(),
+  addLabel: jest.fn().mockReturnThis(),
   to: jest.fn().mockReturnThis(),
   fromTo: jest.fn().mockReturnThis(),
   from: jest.fn().mockReturnThis(),
@@ -39,6 +41,10 @@ const gsapMock = {
     add: jest.fn(),
     revert: jest.fn(),
   })),
+
+  utils: {
+    toArray: jest.fn(() => []),
+  },
 };
 
 export default gsapMock;

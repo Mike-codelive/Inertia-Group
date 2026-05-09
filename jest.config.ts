@@ -8,7 +8,7 @@ const config: Config = {
     '^.+\\.tsx?$': 'ts-jest',
   },
   moduleNameMapper: {
-    '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/test/mocks/fileMock.js',
+    '\\.(gif|ttf|eot|svg|png|jpg|jpeg|webp)$': '<rootDir>/test/mocks/fileMock.js',
     '^@/(.*)$': '<rootDir>/src/$1',
   },
 };
