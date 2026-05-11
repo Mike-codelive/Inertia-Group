@@ -1,12 +1,16 @@
 import { Link } from 'react-router-dom';
 import { slugify } from '@/lib/slugify';
 import type { CatalogItem } from '@/types/catalog';
+import { Bookmark } from 'lucide-react';
+import { useSavedPart } from '@/hooks/useSavedPart';
 
 type Props = {
   item: CatalogItem;
 };
 
 export function CatalogCard({ item }: Props) {
+  const { saved, toggleSaved } = useSavedPart(item.id, item.name);
+
   return (
     <Link to={`/catalog/${slugify(item.category)}/${item.slug}`}>
       <div className="group cursor-pointer grid grid-cols-[150px_1fr] border border-black/20 dark:border-white/20 bg-white dark:bg-transparent hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
@@ -27,9 +31,27 @@ export function CatalogCard({ item }: Props) {
               {item.productFamily}
             </p>
 
-            <p className="text-sm font-semibold uppercase leading-tight group-hover:text-red-600 transition-colors">
-              {item.name}
-            </p>
+            <div className="w-full flex justify-between">
+              <p className="text-sm font-semibold uppercase leading-tight group-hover:text-red-600 transition-colors">
+                {item.name}
+              </p>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  toggleSaved();
+                }}
+                className="cursor-pointer"
+                aria-label={saved ? 'Remove saved part' : 'Save part'}
+              >
+                <Bookmark
+                  className={`size-5 transition-colors ${
+                    saved ? 'fill-red-600 text-red-600' : 'text-muted-foreground'
+                  }`}
+                />
+              </button>
+            </div>
           </div>
 
           <div className="mt-4 border-t pl-4 border-black/10 dark:border-white/10 pt-3 text-[11px]">

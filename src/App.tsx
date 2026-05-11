@@ -5,6 +5,7 @@ import { IntroOverlay } from '@/components/intro/IntroOverlay';
 import { masterTimeline } from '@/animations/masterTimeline';
 import { useTheme } from '@/hooks/useTheme';
 import { useScrollLock } from '@/hooks/useScrollLock';
+import { Toaster } from '@/components/ui/sonner';
 
 export default function App() {
   const [introDone, setIntroDone] = useState(false);
@@ -31,6 +32,7 @@ export default function App() {
       {introDone && <IntroOverlay onComplete={() => setIntroDone(true)} />}
 
       <RouterProvider router={appRouter} />
+      <Toaster />
     </>
   );
 }

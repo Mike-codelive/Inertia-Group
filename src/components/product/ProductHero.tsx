@@ -39,7 +39,7 @@ export function ProductHero({ product }: Props) {
           </p>
 
           <div className="no-print">
-            <ProductActions />
+            <ProductActions product={product} />
           </div>
         </div>
       </div>
