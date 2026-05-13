@@ -16,11 +16,13 @@ const initialFilters: CatalogFilters = {
 export function SearchSidebar({ filters, setFilters, categories, productFamilies }: Props) {
   const toggleFilter = (key: keyof CatalogFilters, value: string) => {
     setFilters((prev) => {
-      const exists = prev[key].includes(value);
+      const exists = prev[key].some((item) => item.toLowerCase() === value.toLowerCase());
 
       return {
         ...prev,
-        [key]: exists ? prev[key].filter((item) => item !== value) : [...prev[key], value],
+        [key]: exists
+          ? prev[key].filter((item) => item.toLowerCase() !== value.toLowerCase())
+          : [...prev[key], value],
       };
     });
   };
@@ -43,7 +45,7 @@ export function SearchSidebar({ filters, setFilters, categories, productFamilies
                 key={category}
                 onClick={() => toggleFilter('categories', category)}
                 className={`cursor-pointer text-left text-sm transition-colors ${
-                  filters.categories.includes(category)
+                  filters.categories.some((item) => item.toLowerCase() === category.toLowerCase())
                     ? 'font-medium text-red-600'
                     : 'text-muted-foreground hover:text-foreground'
                 }`}

@@ -17,8 +17,9 @@ export function ResourcesPage() {
         variant="full"
         minititle="TERMINALS"
         title="MAK / MAS 1.2 Terminals"
-        description="Lear’s MAK / MAS 1.2 terminal system features a two-piece design for signal and low-power applications. With options for various wire cross-sections and surface platings, this product series is suitable for a wide range of sealed and unsealed applications. Designed for high electrical performance and long-term reliability, the system ensures robust retention and mechanical strength while remaining compatible with common industry standards."
+        description="MAK / MAS 1.2 terminal system features a two-piece design for signal and low-power applications. With options for various wire cross-sections and surface platings, this product series is suitable for a wide range of sealed and unsealed applications. Designed for high electrical performance and long-term reliability, the system ensures robust retention and mechanical strength while remaining compatible with common industry standards."
         image={makMas}
+        linkTo="/search?category=terminals"
       />
 
       <div className="container mx-auto px-6 mt-8.5">

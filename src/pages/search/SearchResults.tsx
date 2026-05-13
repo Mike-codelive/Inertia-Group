@@ -12,15 +12,16 @@ const ITEMS_PER_PAGE = 12;
 
 type Props = {
   query: string;
+  initialCategory?: string;
 };
 
-function SearchResultsContent({ query }: Props) {
+function SearchResultsContent({ query, initialCategory }: Props) {
   const { data = [], loading } = useCatalog(query);
 
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
 
   const [filters, setFilters] = useState<CatalogFilters>({
-    categories: [],
+    categories: initialCategory ? [initialCategory] : [],
     productFamilies: [],
   });
 
@@ -30,7 +31,8 @@ function SearchResultsContent({ query }: Props) {
 
   const filteredItems = data.filter((item) => {
     const categoryMatch =
-      filters.categories.length === 0 || filters.categories.includes(item.category);
+      filters.categories.length === 0 ||
+      filters.categories.some((category) => category.toLowerCase() === item.category.toLowerCase());
 
     const familyMatch =
       filters.productFamilies.length === 0 || filters.productFamilies.includes(item.productFamily);
@@ -77,7 +79,7 @@ function SearchResultsContent({ query }: Props) {
               </div>
             </div>
 
-            <div className="min-w-0">
+            <div className="min-w-0 mb-12">
               {count === 0 ? (
                 <div className="flex min-h-[calc(100dvh-180px)] items-center justify-center">
                   <NoResults query={query} />
@@ -91,7 +93,7 @@ function SearchResultsContent({ query }: Props) {
                   </div>
 
                   {visibleCount < count && (
-                    <div className="flex justify-center py-12">
+                    <div className="flex justify-center pt-12">
                       <Button
                         variant="cta"
                         onClick={() => setVisibleCount((prev) => prev + ITEMS_PER_PAGE)}
@@ -112,6 +114,12 @@ function SearchResultsContent({ query }: Props) {
   );
 }
 
-export function SearchResults({ query }: Props) {
-  return <SearchResultsContent key={query} query={query} />;
+export function SearchResults({ query, initialCategory }: Props) {
+  return (
+    <SearchResultsContent
+      key={`${query}-${initialCategory}`}
+      query={query}
+      initialCategory={initialCategory}
+    />
+  );
 }

@@ -7,25 +7,25 @@ export const sections = [
   {
     title: 'Terminals',
     description: 'High-performance terminal solutions',
-    href: '/terminals',
+    href: '/search?category=terminals',
     image: c1,
   },
   {
     title: 'Connectors',
     description: 'Advanced connection systems',
-    href: '/connectors',
+    href: '/search?category=connectors',
     image: c2,
   },
   {
     title: 'Eyelets',
     description: 'Wide spectrum of ring terminal solutions',
-    href: '/eyelets',
+    href: '/search?category=eyelets',
     image: c3,
   },
   {
     title: 'Seals',
     description: 'Complete sealed connector systems',
-    href: '/seals',
+    href: '/search?category=seals',
     image: c4,
   },
 ];
