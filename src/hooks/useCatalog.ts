@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { getCatalog } from '@/services/catalogService';
-import type { CatalogItem } from '@/types/catalog';
-import { searchCatalog } from '@/lib/searchCatalog';
+
+import { getCatalog } from '@/services/catalog/catalog.service';
+
+import type { CatalogItem } from '@/services/catalog/catalog.types';
 
 export function useCatalog(query?: string) {
   const [data, setData] = useState<CatalogItem[]>([]);
@@ -14,19 +15,20 @@ export function useCatalog(query?: string) {
     async function fetchData() {
       try {
         setLoading(true);
-        const catalog = await getCatalog();
+
+        const catalog = await getCatalog(query);
 
         if (!isMounted) return;
 
-        const normalizedQuery = query ?? '';
-        const filtered = searchCatalog(catalog, normalizedQuery);
-
-        setData(filtered);
+        setData(catalog);
       } catch (err) {
         if (!isMounted) return;
+
         setError(err);
       } finally {
-        if (isMounted) setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     }
 
@@ -37,5 +39,9 @@ export function useCatalog(query?: string) {
     };
   }, [query]);
 
-  return { data, loading, error };
+  return {
+    data,
+    loading,
+    error,
+  };
 }

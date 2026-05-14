@@ -3,10 +3,10 @@ import type { CatalogFilters } from '@/types/search';
 
 type Props = {
   filters: CatalogFilters;
-  setFilters: React.Dispatch<React.SetStateAction<CatalogFilters>>;
+  setFilters: (filters: CatalogFilters) => void;
   categories: string[];
   productFamilies: string[];
-  onFilterChange: () => void;
+  onFilterChange?: () => void;
 };
 
 const initialFilters: CatalogFilters = {
@@ -22,25 +22,26 @@ export function SearchSidebar({
   onFilterChange,
 }: Props) {
   const toggleFilter = (key: keyof CatalogFilters, value: string) => {
-    onFilterChange();
+    const exists = filters[key].some((item) => item.toLowerCase() === value.toLowerCase());
 
-    setFilters((prev) => {
-      const exists = prev[key].some((item) => item.toLowerCase() === value.toLowerCase());
+    const nextFilters = {
+      ...filters,
+      [key]: exists
+        ? filters[key].filter((item) => item.toLowerCase() !== value.toLowerCase())
+        : [...filters[key], value],
+    };
 
-      return {
-        ...prev,
-        [key]: exists
-          ? prev[key].filter((item) => item.toLowerCase() !== value.toLowerCase())
-          : [...prev[key], value],
-      };
-    });
+    setFilters(nextFilters);
+
+    onFilterChange?.();
   };
 
   const hasActiveFilters = filters.categories.length > 0 || filters.productFamilies.length > 0;
 
   const clearFilters = () => {
-    onFilterChange();
     setFilters(initialFilters);
+
+    onFilterChange?.();
   };
 
   return (

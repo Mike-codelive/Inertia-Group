@@ -1,30 +1,29 @@
 import { useEffect, useRef, useState } from 'react';
+
 import { CatalogCard } from '@/components/catalog/CatalogCard';
-import { Button } from '@/components/ui/button';
-import { useCatalog } from '@/hooks/useCatalog';
-import { Spinner } from '@/components/ui/spinner';
 import { NoResults } from '@/components/search/NoResults';
 import { SearchSidebar } from '@/components/search/SearchSidebar';
+import { Spinner } from '@/components/ui/spinner';
+import { Button } from '@/components/ui/button';
+
+import { useCatalog } from '@/hooks/useCatalog';
+
 import type { CatalogFilters } from '@/types/search';
 
 const ITEMS_PER_PAGE = 12;
 
 type Props = {
   query: string;
-  initialCategory?: string;
+  filters: CatalogFilters;
+  setFilters: (filters: CatalogFilters) => void;
 };
 
-function SearchResultsContent({ query, initialCategory }: Props) {
+function SearchResultsContent({ query, filters, setFilters }: Props) {
   const { data = [], loading } = useCatalog(query);
 
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
 
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
-
-  const [filters, setFilters] = useState<CatalogFilters>({
-    categories: initialCategory ? [initialCategory] : [],
-    productFamilies: [],
-  });
 
   const categories = [...new Set(data.map((item) => item.category))];
 
@@ -36,7 +35,10 @@ function SearchResultsContent({ query, initialCategory }: Props) {
       filters.categories.some((category) => category.toLowerCase() === item.category.toLowerCase());
 
     const familyMatch =
-      filters.productFamilies.length === 0 || filters.productFamilies.includes(item.productFamily);
+      filters.productFamilies.length === 0 ||
+      filters.productFamilies.some(
+        (family) => family.toLowerCase() === item.productFamily.toLowerCase()
+      );
 
     return categoryMatch && familyMatch;
   });
@@ -93,9 +95,9 @@ function SearchResultsContent({ query, initialCategory }: Props) {
             </div>
           </div>
 
-          <div className="mt-29 md:grid grid-cols-[240px_1fr] gap-10">
-            <div className="hidden md:block relative">
-              <div className="fixed top-29 bottom-0 pt-5 w-60 border-r">
+          <div className="mt-29 gap-10 md:grid md:grid-cols-[240px_1fr]">
+            <div className="relative hidden md:block">
+              <div className="fixed top-29 bottom-0 w-60 border-r pt-5">
                 <SearchSidebar
                   filters={filters}
                   setFilters={setFilters}
@@ -106,7 +108,7 @@ function SearchResultsContent({ query, initialCategory }: Props) {
               </div>
             </div>
 
-            <div className="min-w-0 mb-12">
+            <div className="mb-12 min-w-0">
               {count === 0 ? (
                 <div className="flex min-h-[calc(100dvh-180px)] items-center justify-center">
                   <NoResults query={query} />
@@ -134,12 +136,6 @@ function SearchResultsContent({ query, initialCategory }: Props) {
   );
 }
 
-export function SearchResults({ query, initialCategory }: Props) {
-  return (
-    <SearchResultsContent
-      key={`${query}-${initialCategory}`}
-      query={query}
-      initialCategory={initialCategory}
-    />
-  );
+export function SearchResults(props: Props) {
+  return <SearchResultsContent key={props.query} {...props} />;
 }

@@ -8,6 +8,13 @@ jest.mock('@/hooks/useCatalog', () => ({
   useCatalog: jest.fn(),
 }));
 
+const filters = {
+  categories: [],
+  productFamilies: [],
+};
+
+const setFilters = jest.fn();
+
 const makeProduct = (id: number): CatalogItem => ({
   id: String(id),
   slug: `connector-${id}`,
@@ -44,7 +51,7 @@ describe('SearchResults', () => {
   it('shows the loading state while catalog data is loading', () => {
     jest.mocked(useCatalog).mockReturnValue({ data: [], loading: true, error: null });
 
-    render(<SearchResults query="connector" />);
+    render(<SearchResults query="connector" filters={filters} setFilters={setFilters} />);
 
     expect(screen.getByRole('button', { name: /loading/i })).toBeDisabled();
   });
@@ -52,7 +59,7 @@ describe('SearchResults', () => {
   it('shows an empty result message', () => {
     jest.mocked(useCatalog).mockReturnValue({ data: [], loading: false, error: null });
 
-    render(<SearchResults query="missing" />);
+    render(<SearchResults query="missing" filters={filters} setFilters={setFilters} />);
 
     expect(screen.getByText(/We couldn’t find any matches for "missing"/)).toBeInTheDocument();
   });
@@ -66,7 +73,7 @@ describe('SearchResults', () => {
 
     render(
       <MemoryRouter>
-        <SearchResults query="connector" />
+        <SearchResults query="connector" filters={filters} setFilters={setFilters} />
       </MemoryRouter>
     );
 
