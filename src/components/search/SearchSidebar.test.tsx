@@ -15,6 +15,7 @@ function SidebarHarness() {
       setFilters={setFilters}
       categories={['Connectors', 'Seals']}
       productFamilies={['HCP', 'SCP']}
+      onFilterChange={jest.fn()}
     />
   );
 }

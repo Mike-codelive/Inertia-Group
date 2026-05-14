@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { SearchResults } from './SearchResults';
 import { useCatalog } from '@/hooks/useCatalog';
@@ -22,6 +22,25 @@ const makeProduct = (id: number): CatalogItem => ({
 });
 
 describe('SearchResults', () => {
+  let intersectionCallback: IntersectionObserverCallback | undefined;
+
+  beforeEach(() => {
+    intersectionCallback = undefined;
+
+    Object.defineProperty(window, 'IntersectionObserver', {
+      writable: true,
+      value: jest.fn((callback: IntersectionObserverCallback) => {
+        intersectionCallback = callback;
+
+        return {
+          observe: jest.fn(),
+          unobserve: jest.fn(),
+          disconnect: jest.fn(),
+        };
+      }),
+    });
+  });
+
   it('shows the loading state while catalog data is loading', () => {
     jest.mocked(useCatalog).mockReturnValue({ data: [], loading: true, error: null });
 
@@ -38,7 +57,7 @@ describe('SearchResults', () => {
     expect(screen.getByText(/We couldn’t find any matches for "missing"/)).toBeInTheDocument();
   });
 
-  it('renders results and loads more items', () => {
+  it('renders results and loads more items when the sentinel intersects', () => {
     jest.mocked(useCatalog).mockReturnValue({
       data: Array.from({ length: 13 }, (_, index) => makeProduct(index + 1)),
       loading: false,
@@ -54,7 +73,12 @@ describe('SearchResults', () => {
     expect(screen.getByText('Connector 1')).toBeInTheDocument();
     expect(screen.queryByText('Connector 13')).not.toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole('button', { name: /load more/i }));
+    act(() => {
+      intersectionCallback?.(
+        [{ isIntersecting: true } as IntersectionObserverEntry],
+        {} as IntersectionObserver
+      );
+    });
 
     expect(screen.getByText('Connector 13')).toBeInTheDocument();
   });

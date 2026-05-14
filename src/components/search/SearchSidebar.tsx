@@ -6,6 +6,7 @@ type Props = {
   setFilters: React.Dispatch<React.SetStateAction<CatalogFilters>>;
   categories: string[];
   productFamilies: string[];
+  onFilterChange: () => void;
 };
 
 const initialFilters: CatalogFilters = {
@@ -13,8 +14,16 @@ const initialFilters: CatalogFilters = {
   productFamilies: [],
 };
 
-export function SearchSidebar({ filters, setFilters, categories, productFamilies }: Props) {
+export function SearchSidebar({
+  filters,
+  setFilters,
+  categories,
+  productFamilies,
+  onFilterChange,
+}: Props) {
   const toggleFilter = (key: keyof CatalogFilters, value: string) => {
+    onFilterChange();
+
     setFilters((prev) => {
       const exists = prev[key].some((item) => item.toLowerCase() === value.toLowerCase());
 
@@ -30,6 +39,7 @@ export function SearchSidebar({ filters, setFilters, categories, productFamilies
   const hasActiveFilters = filters.categories.length > 0 || filters.productFamilies.length > 0;
 
   const clearFilters = () => {
+    onFilterChange();
     setFilters(initialFilters);
   };
 
@@ -81,7 +91,7 @@ export function SearchSidebar({ filters, setFilters, categories, productFamilies
             <Button
               variant="cta"
               onClick={clearFilters}
-              className="h-auto w-full text-sm cursor-pointer"
+              className="h-auto w-full cursor-pointer text-sm"
             >
               Clear all filters
             </Button>

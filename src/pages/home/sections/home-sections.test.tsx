@@ -17,7 +17,11 @@ describe('home page sections', () => {
   });
 
   it('renders catalog cards', () => {
-    render(<CatalogSections />);
+    render(
+      <MemoryRouter>
+        <CatalogSections />
+      </MemoryRouter>
+    );
 
     expect(screen.getByRole('link', { name: /connectors/i })).toBeInTheDocument();
   });

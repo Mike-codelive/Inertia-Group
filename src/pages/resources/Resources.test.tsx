@@ -1,9 +1,14 @@
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import { ResourcesPage } from './Resources';
 
 describe('ResourcesPage', () => {
   it('renders resource hero and posts', () => {
-    render(<ResourcesPage />);
+    render(
+      <MemoryRouter>
+        <ResourcesPage />
+      </MemoryRouter>
+    );
 
     expect(screen.getByRole('heading', { name: 'MAK / MAS 1.2 Terminals' })).toBeInTheDocument();
     expect(screen.getByText('Resources')).toBeInTheDocument();

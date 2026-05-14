@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CatalogCard } from '@/components/catalog/CatalogCard';
-import { MoveRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCatalog } from '@/hooks/useCatalog';
 import { Spinner } from '@/components/ui/spinner';
@@ -19,6 +18,8 @@ function SearchResultsContent({ query, initialCategory }: Props) {
   const { data = [], loading } = useCatalog(query);
 
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
+
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
   const [filters, setFilters] = useState<CatalogFilters>({
     categories: initialCategory ? [initialCategory] : [],
@@ -43,6 +44,31 @@ function SearchResultsContent({ query, initialCategory }: Props) {
   const count = filteredItems.length;
 
   const visibleItems = filteredItems.slice(0, visibleCount);
+
+  useEffect(() => {
+    const target = loadMoreRef.current;
+
+    if (!target) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisibleCount((prev) => {
+            if (prev >= count) return prev;
+
+            return prev + ITEMS_PER_PAGE;
+          });
+        }
+      },
+      {
+        rootMargin: '300px',
+      }
+    );
+
+    observer.observe(target);
+
+    return () => observer.disconnect();
+  }, [count]);
 
   return (
     <div className="container mx-auto min-h-[calc(100dvh-120px)] px-6">
@@ -75,6 +101,7 @@ function SearchResultsContent({ query, initialCategory }: Props) {
                   setFilters={setFilters}
                   categories={categories}
                   productFamilies={productFamilies}
+                  onFilterChange={() => setVisibleCount(ITEMS_PER_PAGE)}
                 />
               </div>
             </div>
@@ -93,15 +120,8 @@ function SearchResultsContent({ query, initialCategory }: Props) {
                   </div>
 
                   {visibleCount < count && (
-                    <div className="flex justify-center pt-12">
-                      <Button
-                        variant="cta"
-                        onClick={() => setVisibleCount((prev) => prev + ITEMS_PER_PAGE)}
-                        className="group flex items-center justify-between gap-20 px-6 text-sm font-medium transition-colors select-none"
-                      >
-                        LOAD MORE
-                        <MoveRight className="size-5 transition-transform duration-200 group-hover:translate-x-1" />
-                      </Button>
+                    <div ref={loadMoreRef} className="flex justify-center py-10">
+                      <Spinner />
                     </div>
                   )}
                 </>
