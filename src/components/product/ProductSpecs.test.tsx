@@ -1,6 +1,6 @@
+import type { CatalogItem } from '@/domain/catalog/catalog.types';
 import { render, screen } from '@testing-library/react';
 import { ProductSpecs } from './ProductSpecs';
-import type { CatalogItem } from '@/types/catalog';
 
 const product: CatalogItem = {
   id: '1',

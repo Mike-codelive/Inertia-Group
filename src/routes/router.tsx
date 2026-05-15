@@ -1,15 +1,21 @@
+import { createBrowserRouter } from 'react-router-dom';
+import { ProtectedRoute } from '@/routes/ProtectedRoute';
+
+import { RootLayout } from '@/layouts/RootLayout';
 import { MainLayout } from '@/layouts/MainLayout';
 import { NoFooterLayout } from '@/layouts/NoFooterLayout';
-import { RootLayout } from '@/layouts/RootLayout';
-import { createBrowserRouter } from 'react-router-dom';
 
+import { HomePage } from '@/pages/home/Home';
 import { AboutPage } from '@/pages/about/About';
 import { ContactPage } from '@/pages/contact/Contact';
-import { HomePage } from '@/pages/home/Home';
-import { PartsPage } from '@/pages/parts/Parts';
-import { ProductDetailsPage } from '@/pages/product/ProductDetails';
 import { ResourcesPage } from '@/pages/resources/Resources';
+
 import { SearchPage } from '@/pages/search/Search';
+import { PartsPage } from '@/pages/parts/Parts';
+
+import { ProductDetailsPage } from '@/pages/product/ProductDetails';
+import { RegisterPage } from '@/pages/auth/RegisterPage';
+import { AccountPage } from '@/pages/account/AccountPage';
 
 export const router = (isReady: boolean) =>
   createBrowserRouter([
@@ -51,6 +57,19 @@ export const router = (isReady: boolean) =>
             {
               path: '/saved-parts',
               element: <PartsPage />,
+            },
+            {
+              path: '/register',
+              element: <RegisterPage />,
+            },
+          ],
+        },
+        {
+          element: <ProtectedRoute />,
+          children: [
+            {
+              path: '/account',
+              element: <AccountPage />,
             },
           ],
         },

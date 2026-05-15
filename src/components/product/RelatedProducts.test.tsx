@@ -1,7 +1,7 @@
+import type { CatalogItem } from '@/domain/catalog/catalog.types';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { RelatedProducts } from './RelatedProducts';
-import type { CatalogItem } from '@/types/catalog';
 
 const baseProduct: CatalogItem = {
   id: '1',

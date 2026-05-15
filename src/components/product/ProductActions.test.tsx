@@ -1,6 +1,6 @@
+import type { CatalogItem } from '@/domain/catalog/catalog.types';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { ProductActions } from './ProductActions';
-import type { CatalogItem } from '@/types/catalog';
 
 const product: CatalogItem = {
   id: 'connector-a',

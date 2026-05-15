@@ -1,5 +1,12 @@
 import { getCatalog } from './catalogService';
 import { productCatalog } from '@/data/productCatalog';
+import { mapCatalogRecord } from '@/domain/catalog/catalog.mapper';
+
+jest.mock('@/config/env', () => ({
+  env: {
+    apiDelay: 500,
+  },
+}));
 
 describe('getCatalog', () => {
   beforeEach(() => {
@@ -15,6 +22,6 @@ describe('getCatalog', () => {
 
     jest.advanceTimersByTime(500);
 
-    await expect(catalogPromise).resolves.toBe(productCatalog);
+    await expect(catalogPromise).resolves.toEqual(productCatalog.map(mapCatalogRecord));
   });
 });

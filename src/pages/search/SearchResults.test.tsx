@@ -1,8 +1,8 @@
+import type { CatalogItem } from '@/domain/catalog/catalog.types';
+import { useCatalog } from '@/hooks/useCatalog';
 import { act, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { SearchResults } from './SearchResults';
-import { useCatalog } from '@/hooks/useCatalog';
-import type { CatalogItem } from '@/types/catalog';
 
 jest.mock('@/hooks/useCatalog', () => ({
   useCatalog: jest.fn(),
@@ -53,7 +53,8 @@ describe('SearchResults', () => {
 
     render(<SearchResults query="connector" filters={filters} setFilters={setFilters} />);
 
-    expect(screen.getByRole('button', { name: /loading/i })).toBeDisabled();
+    expect(screen.getAllByTestId('catalog-skeleton')).toHaveLength(12);
+    expect(screen.getByTestId('catalog-sidebar-skeleton')).toBeInTheDocument();
   });
 
   it('shows an empty result message', () => {

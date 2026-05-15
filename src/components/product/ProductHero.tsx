@@ -1,6 +1,6 @@
-import type { CatalogItem } from '@/types/catalog';
 import { ProductActions } from '@/components/product/ProductActions';
 import { ProductBreadcrumbs } from '@/components/product/ProductBreadcrumbs';
+import type { CatalogItem } from '@/domain/catalog/catalog.types';
 
 type Props = {
   product: CatalogItem;

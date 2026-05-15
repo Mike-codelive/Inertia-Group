@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
 
-import { getCatalog } from '@/services/catalog/catalog.service';
+import { searchCatalog } from '@/lib/searchCatalog';
 
-import type { CatalogItem } from '@/services/catalog/catalog.types';
+import { getCatalog } from '@/services/catalogService';
+
+import type { CatalogItem } from '@/domain/catalog/catalog.types';
+import type { AppError } from '@/types/error';
 
 export function useCatalog(query?: string) {
   const [data, setData] = useState<CatalogItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<unknown>(null);
+
+  const [error, setError] = useState<AppError | null>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -16,15 +20,23 @@ export function useCatalog(query?: string) {
       try {
         setLoading(true);
 
-        const catalog = await getCatalog(query);
+        const catalog = await getCatalog();
 
         if (!isMounted) return;
 
-        setData(catalog);
+        const normalizedQuery = query ?? '';
+
+        const filtered = searchCatalog(catalog, normalizedQuery);
+
+        setData(filtered);
+
+        setError(null);
       } catch (err) {
         if (!isMounted) return;
 
-        setError(err);
+        setError({
+          message: err instanceof Error ? err.message : 'Unknown error',
+        });
       } finally {
         if (isMounted) {
           setLoading(false);

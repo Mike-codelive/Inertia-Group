@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom';
-import { slugify } from '@/lib/slugify';
-import type { CatalogItem } from '@/types/catalog';
-import { Bookmark } from 'lucide-react';
+import type { CatalogItem } from '@/domain/catalog/catalog.types';
 import { useSavedPart } from '@/hooks/useSavedPart';
+import { slugify } from '@/lib/slugify';
+import { Bookmark } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 type Props = {
   item: CatalogItem;

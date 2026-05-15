@@ -1,7 +1,7 @@
-import { Download, Bookmark, Printer } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import type { CatalogItem } from '@/domain/catalog/catalog.types';
 import { useSavedPart } from '@/hooks/useSavedPart';
-import type { CatalogItem } from '@/types/catalog';
+import { Bookmark, Download, Printer } from 'lucide-react';
 
 type Props = {
   product: CatalogItem;

@@ -1,7 +1,7 @@
+import type { CatalogItem } from '@/domain/catalog/catalog.types';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { CatalogCard } from './CatalogCard';
-import type { CatalogItem } from '@/types/catalog';
 
 const item: CatalogItem = {
   id: '1',

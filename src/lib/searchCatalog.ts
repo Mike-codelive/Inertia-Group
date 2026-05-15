@@ -1,4 +1,4 @@
-import type { CatalogItem } from '@/types/catalog';
+import type { CatalogItem } from '@/domain/catalog/catalog.types';
 
 export function searchCatalog(data: CatalogItem[], query: string = '') {
   const q = query.toLowerCase().trim();

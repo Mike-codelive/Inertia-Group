@@ -30,6 +30,12 @@ export function ContactSection() {
   const { register, handleSubmit, setValue, formState } = form;
   const { errors } = formState;
 
+  const onSubmit = async (data: ContactFormValues) => {
+    await new Promise((resolve) => setTimeout(resolve, 800));
+
+    console.log('Contact request submitted:', data);
+  };
+
   return (
     <section className="w-full py-16 md:py-24">
       <div className="container mx-auto grid grid-cols-1 gap-12 px-6 lg:grid-cols-[356px_1fr]">
@@ -51,10 +57,7 @@ export function ContactSection() {
           <div className="mx-auto flex max-w-2xl flex-col gap-6 bg-background p-6">
             <h3 className="text-[clamp(1.125rem,2.2vw,1.75rem)] font-semibold">Contact Us</h3>
 
-            <form
-              onSubmit={handleSubmit((data) => console.log('Demo submit', data))}
-              className="flex flex-col gap-4"
-            >
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-2">
                   <Label>

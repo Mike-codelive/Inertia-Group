@@ -4,11 +4,13 @@ import { CatalogCard } from '@/components/catalog/CatalogCard';
 import { NoResults } from '@/components/search/NoResults';
 import { SearchSidebar } from '@/components/search/SearchSidebar';
 import { Spinner } from '@/components/ui/spinner';
-import { Button } from '@/components/ui/button';
 
 import { useCatalog } from '@/hooks/useCatalog';
 
 import type { CatalogFilters } from '@/types/search';
+import { SearchSidebarSkeleton } from '@/components/search/SearchSidebarSkeleton';
+import { CatalogCardSkeleton } from '@/components/catalog/CatalogCardSkeleton';
+import { ErrorState } from '@/components/ui/error-state';
 
 const ITEMS_PER_PAGE = 12;
 
@@ -19,7 +21,7 @@ type Props = {
 };
 
 function SearchResultsContent({ query, filters, setFilters }: Props) {
-  const { data = [], loading } = useCatalog(query);
+  const { data = [], loading, error } = useCatalog(query);
 
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
 
@@ -72,14 +74,35 @@ function SearchResultsContent({ query, filters, setFilters }: Props) {
     return () => observer.disconnect();
   }, [count]);
 
+  if (error) {
+    return <ErrorState title="Unable to load catalog" description={error.message} />;
+  }
+
   return (
     <div className="container mx-auto min-h-[calc(100dvh-120px)] px-6">
       {loading ? (
-        <div className="flex h-[calc(100dvh-65px)] items-center justify-center">
-          <Button disabled size="sm">
-            <Spinner data-icon="inline-start" />
-            Loading...
-          </Button>
+        <div className="relative">
+          <div className="fixed top-16.25 left-0 right-0 z-30 border-b bg-background">
+            <div className="container mx-auto px-6 py-4">
+              <div className="h-4 w-32 animate-pulse bg-muted" />
+            </div>
+          </div>
+
+          <div className="mt-29 gap-10 md:grid md:grid-cols-[240px_1fr]">
+            <div className="relative hidden md:block">
+              <div className="fixed top-29 bottom-0 w-60 pt-5">
+                <SearchSidebarSkeleton />
+              </div>
+            </div>
+
+            <div className="mb-12 min-w-0">
+              <div className="mt-5 grid gap-6 min-[0px]:grid-cols-1 min-[1025px]:grid-cols-2 xl:grid-cols-3">
+                {Array.from({ length: 12 }).map((_, index) => (
+                  <CatalogCardSkeleton key={index} />
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       ) : (
         <div className="relative">

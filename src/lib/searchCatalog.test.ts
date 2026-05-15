@@ -1,5 +1,5 @@
+import type { CatalogItem } from '@/domain/catalog/catalog.types';
 import { searchCatalog } from './searchCatalog';
-import type { CatalogItem } from '@/types/catalog';
 
 const catalog: CatalogItem[] = [
   {

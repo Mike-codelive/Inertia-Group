@@ -1,5 +1,5 @@
 import { CatalogCard } from '@/components/catalog/CatalogCard';
-import type { CatalogItem } from '@/types/catalog';
+import type { CatalogItem } from '@/domain/catalog/catalog.types';
 
 type Props = {
   currentProduct: CatalogItem;

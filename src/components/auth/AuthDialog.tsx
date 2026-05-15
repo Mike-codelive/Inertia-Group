@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Check } from 'lucide-react';
-// import { Label } from '@/components/ui/label';
+import { useNavigate } from 'react-router-dom';
 
 type AuthDialogProps = {
   open: boolean;
@@ -16,6 +16,8 @@ type AuthDialogProps = {
 };
 
 export function AuthDialog({ open, onOpenChange }: AuthDialogProps) {
+  const navigate = useNavigate();
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-121.5">
@@ -42,6 +44,10 @@ export function AuthDialog({ open, onOpenChange }: AuthDialogProps) {
           <div className="border-t border-black/20 dark:border-white/20" />
           <p className="text-[.75rem] text-center mt-2">Don’t have an account?</p>
           <Button
+            onClick={() => {
+              onOpenChange(false);
+              navigate('/register');
+            }}
             size={'sm'}
             className="uppercase text-[.75rem] my-7 w-full rounded-none bg-red-600 hover:bg-red-700 text-white hover:text-gray-300"
           >
@@ -72,7 +78,6 @@ export function AuthDialog({ open, onOpenChange }: AuthDialogProps) {
             </ul>
           </div>
           <div className="flex gap-4"></div>
-          {/* <Label htmlFor="email">Email</Label> */}
         </div>
       </DialogContent>
     </Dialog>

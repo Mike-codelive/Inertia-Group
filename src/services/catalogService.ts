@@ -1,8 +1,17 @@
 import { productCatalog } from '@/data/productCatalog';
-import type { CatalogItem } from '@/types/catalog';
+
+import { mapCatalogRecord } from '@/domain/catalog/catalog.mapper';
+
+import type { CatalogItem } from '@/domain/catalog/catalog.types';
+
+import { env } from '@/config/env';
 
 export async function getCatalog(): Promise<CatalogItem[]> {
   return new Promise((resolve) => {
-    setTimeout(() => resolve(productCatalog), 500);
+    setTimeout(() => {
+      const items = productCatalog.map(mapCatalogRecord);
+
+      resolve(items);
+    }, env.apiDelay);
   });
 }
