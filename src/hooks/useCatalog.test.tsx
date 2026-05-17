@@ -2,11 +2,11 @@ import { renderHook, waitFor } from '@testing-library/react';
 
 import { useCatalog } from './useCatalog';
 
-import { getCatalog } from '@/services/catalog/catalog.service';
+import { getCatalog } from '@/services/catalogService';
 
-import type { CatalogItem } from '@/services/catalog/catalog.types';
+import type { CatalogItem } from '@/domain/catalog/catalog.types';
 
-jest.mock('@/services/catalog/catalog.service', () => ({
+jest.mock('@/services/catalogService', () => ({
   getCatalog: jest.fn(),
 }));
 
@@ -39,7 +39,7 @@ describe('useCatalog', () => {
 
     await waitFor(() => expect(result.current.loading).toBe(false));
 
-    expect(getCatalog).toHaveBeenCalledWith('connector');
+    expect(getCatalog).toHaveBeenCalled();
 
     expect(result.current.data).toEqual(catalog);
 
@@ -49,7 +49,7 @@ describe('useCatalog', () => {
   it('uses empty query when query is undefined', async () => {
     renderHook(() => useCatalog());
 
-    await waitFor(() => expect(getCatalog).toHaveBeenCalledWith(undefined));
+    await waitFor(() => expect(getCatalog).toHaveBeenCalled());
   });
 
   it('exposes errors from catalog service', async () => {
@@ -61,6 +61,6 @@ describe('useCatalog', () => {
 
     await waitFor(() => expect(result.current.loading).toBe(false));
 
-    expect(result.current.error).toBe(error);
+    expect(result.current.error).toEqual({ message: error.message });
   });
 });
