@@ -1,16 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { CatalogCard } from '@/components/catalog/CatalogCard';
+import { CatalogCardSkeleton } from '@/components/catalog/CatalogCardSkeleton';
 import { NoResults } from '@/components/search/NoResults';
 import { SearchSidebar } from '@/components/search/SearchSidebar';
+import { SearchSidebarSkeleton } from '@/components/search/SearchSidebarSkeleton';
+import { ErrorState } from '@/components/ui/error-state';
 import { Spinner } from '@/components/ui/spinner';
 
-import { useCatalog } from '@/hooks/useCatalog';
+import { useProducts } from '@/hooks/useProducts';
 
 import type { CatalogFilters } from '@/types/search';
-import { SearchSidebarSkeleton } from '@/components/search/SearchSidebarSkeleton';
-import { CatalogCardSkeleton } from '@/components/catalog/CatalogCardSkeleton';
-import { ErrorState } from '@/components/ui/error-state';
 
 const ITEMS_PER_PAGE = 12;
 
@@ -21,44 +21,74 @@ type Props = {
 };
 
 function SearchResultsContent({ query, filters, setFilters }: Props) {
-  const { data = [], loading, error } = useCatalog(query);
+  const { products, loading, error } = useProducts();
 
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
 
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
-  const categories = [...new Set(data.map((item) => item.category))];
+  const normalizedQuery = query.toLowerCase();
 
-  const productFamilies = [...new Set(data.map((item) => item.productFamily))];
+  const searchedItems = products.filter((item) => {
+    if (!normalizedQuery) {
+      return true;
+    }
 
-  const filteredItems = data.filter((item) => {
+    return (
+      item.name.toLowerCase().includes(normalizedQuery) ||
+      item.description?.toLowerCase().includes(normalizedQuery) ||
+      item.productFamily?.toLowerCase().includes(normalizedQuery)
+    );
+  });
+
+  const categories = [
+    ...new Set(
+      searchedItems
+        .map((item) => item.category?.slug)
+        .filter((slug): slug is string => typeof slug === 'string')
+    ),
+  ];
+
+  const productFamilies = [
+    ...new Set(
+      searchedItems
+        .map((item) => item.productFamily)
+        .filter((family): family is string => typeof family === 'string')
+    ),
+  ];
+
+  const filteredItems = searchedItems.filter((item) => {
     const categoryMatch =
-      filters.categories.length === 0 ||
-      filters.categories.some((category) => category.toLowerCase() === item.category.toLowerCase());
+      filters.categories.length === 0 || filters.categories.includes(item.category?.slug ?? '');
 
     const familyMatch =
       filters.productFamilies.length === 0 ||
-      filters.productFamilies.some(
-        (family) => family.toLowerCase() === item.productFamily.toLowerCase()
-      );
+      filters.productFamilies.includes(item.productFamily ?? '');
 
     return categoryMatch && familyMatch;
   });
 
   const count = filteredItems.length;
 
-  const visibleItems = filteredItems.slice(0, visibleCount);
+  const safeVisibleCount =
+    visibleCount > filteredItems.length ? filteredItems.length : visibleCount;
+
+  const visibleItems = filteredItems.slice(0, safeVisibleCount);
 
   useEffect(() => {
     const target = loadMoreRef.current;
 
-    if (!target) return;
+    if (!target) {
+      return;
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setVisibleCount((prev) => {
-            if (prev >= count) return prev;
+            if (prev >= count) {
+              return prev;
+            }
 
             return prev + ITEMS_PER_PAGE;
           });
@@ -75,7 +105,7 @@ function SearchResultsContent({ query, filters, setFilters }: Props) {
   }, [count]);
 
   if (error) {
-    return <ErrorState title="Unable to load catalog" description={error.message} />;
+    return <ErrorState title="Unable to load catalog" description={error} />;
   }
 
   return (
@@ -97,7 +127,9 @@ function SearchResultsContent({ query, filters, setFilters }: Props) {
 
             <div className="mb-12 min-w-0">
               <div className="mt-5 grid gap-6 min-[0px]:grid-cols-1 min-[1025px]:grid-cols-2 xl:grid-cols-3">
-                {Array.from({ length: 12 }).map((_, index) => (
+                {Array.from({
+                  length: 12,
+                }).map((_, index) => (
                   <CatalogCardSkeleton key={index} />
                 ))}
               </div>
@@ -109,7 +141,10 @@ function SearchResultsContent({ query, filters, setFilters }: Props) {
           <div className="fixed top-16.25 left-0 right-0 z-30 border-b bg-background">
             <div className="container mx-auto px-6 py-4">
               <p className="text-sm text-muted-foreground">
-                <span>RESULTS {query ? `FOR ${query}` : ''}</span>
+                <span>
+                  RESULTS
+                  {query ? ` FOR ${query}` : ''}
+                </span>
 
                 <span className="ml-3 text-sm font-light text-gray-700 dark:text-gray-300">
                   {count}
@@ -126,7 +161,11 @@ function SearchResultsContent({ query, filters, setFilters }: Props) {
                   setFilters={setFilters}
                   categories={categories}
                   productFamilies={productFamilies}
-                  onFilterChange={() => setVisibleCount(ITEMS_PER_PAGE)}
+                  onFilterChange={() => {
+                    if (visibleCount !== ITEMS_PER_PAGE) {
+                      setVisibleCount(ITEMS_PER_PAGE);
+                    }
+                  }}
                 />
               </div>
             </div>

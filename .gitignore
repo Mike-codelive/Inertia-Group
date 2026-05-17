@@ -9,6 +9,7 @@ lerna-debug.log*
 
 node_modules
 dist-ssr
+.env
 *.local
 
 # Editor directories and files
@@ -22,9 +23,12 @@ dist-ssr
 *.sln
 *.sw?
 
+
 # build
 /dist
 /build
 
 # testing
 /coverage
+
+.env

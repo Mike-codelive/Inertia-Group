@@ -1,31 +1,31 @@
-import { ProductActions } from '@/components/product/ProductActions';
-import { ProductBreadcrumbs } from '@/components/product/ProductBreadcrumbs';
-import type { CatalogItem } from '@/domain/catalog/catalog.types';
+// import { ProductActions } from '@/components/product/ProductActions';
+// import { ProductBreadcrumbs } from '@/components/product/ProductBreadcrumbs';
+import type { Product } from '@/services/products/products.types';
 
 type Props = {
-  product: CatalogItem;
+  product: Product;
 };
 
 export function ProductHero({ product }: Props) {
   return (
     <section className="print:mb-4">
       <div className="no-print">
-        <ProductBreadcrumbs category={product.category} productName={product.name} />
+        {/* <ProductBreadcrumbs category={product.category?.[0]?.name} productName={product.name} /> */}
       </div>
 
       <div className="grid gap-14 print:gap-6 lg:grid-cols-[1fr_500px] print:grid-cols-2">
         <div className="h-fit border border-black/10 dark:border-white/10">
-          <img
+          {/* <img
             src={product.image}
             alt={product.name}
             loading="lazy"
             className="w-full object-contain p-5 print:max-h-72 print:p-2"
-          />
+          /> */}
         </div>
 
         <div>
           <p className="text-sm uppercase tracking-wide text-muted-foreground print:text-xs">
-            {product.category}
+            {product.category?.name}
           </p>
 
           <h1 className="mt-3 text-4xl font-semibold uppercase print:mt-2 print:text-2xl">
@@ -38,9 +38,7 @@ export function ProductHero({ product }: Props) {
             industrial standard interfaces.
           </p>
 
-          <div className="no-print">
-            <ProductActions product={product} />
-          </div>
+          <div className="no-print">{/* <ProductActions product={product} /> */}</div>
         </div>
       </div>
     </section>

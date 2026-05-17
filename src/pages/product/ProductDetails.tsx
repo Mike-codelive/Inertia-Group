@@ -1,14 +1,18 @@
 import { useParams } from 'react-router-dom';
-import { productCatalog } from '@/data/productCatalog';
-
+// import { productCatalog } from '@/data/productCatalog';
+import { useProduct } from '@/hooks/useProducts';
 import { ProductHero } from '@/components/product/ProductHero';
 import { ProductSpecs } from '@/components/product/ProductSpecs';
-import { RelatedProducts } from '@/components/product/RelatedProducts';
+// import { RelatedProducts } from '@/components/product/RelatedProducts';
 
 export function ProductDetailsPage() {
   const { slug } = useParams();
 
-  const product = productCatalog.find((item) => item.slug === slug);
+  const { product, loading, error } = useProduct(slug ?? '');
+
+  if (loading) {
+    return <div>Loading product...</div>;
+  }
 
   if (!product) {
     return (
@@ -22,6 +26,10 @@ export function ProductDetailsPage() {
     );
   }
 
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   return (
     <section className="container mx-auto px-6 py-24">
       <div className="print-container">
@@ -30,7 +38,8 @@ export function ProductDetailsPage() {
       </div>
 
       <div className="no-print">
-        <RelatedProducts currentProduct={product} products={productCatalog} />
+        {/* <RelatedProducts currentProduct={product} products={productCatalog} /> */}
+        Related products coming soon
       </div>
     </section>
   );

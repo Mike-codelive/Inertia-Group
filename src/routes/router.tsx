@@ -41,8 +41,13 @@ export const router = (isReady: boolean) =>
               path: '/resources',
               element: <ResourcesPage />,
             },
+            // {
+            //   path: '/catalog/:category/:slug',
+            //   element: <ProductDetailsPage />,
+            // },
+
             {
-              path: '/catalog/:category/:slug',
+              path: '/products/:slug',
               element: <ProductDetailsPage />,
             },
           ],
@@ -50,6 +55,10 @@ export const router = (isReady: boolean) =>
         {
           element: <NoFooterLayout />,
           children: [
+            // {
+            //   path: '/search',
+            //   element: <SearchPage />,
+            // },
             {
               path: '/search',
               element: <SearchPage />,

@@ -1,14 +1,14 @@
-import type { CatalogItem } from '@/domain/catalog/catalog.types';
+import type { Product } from '@/services/products/products.types';
 
 type Props = {
-  product: CatalogItem;
+  product: Product;
 };
 
 export function ProductSpecs({ product }: Props) {
   const specs = [
     {
       label: 'Category',
-      value: product.category,
+      value: product.category?.name,
     },
     {
       label: 'Product Family',

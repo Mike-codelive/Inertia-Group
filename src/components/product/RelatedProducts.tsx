@@ -1,18 +1,16 @@
 import { CatalogCard } from '@/components/catalog/CatalogCard';
-import type { CatalogItem } from '@/domain/catalog/catalog.types';
+import type { Product } from '@/services/products/products.types';
 
 type Props = {
-  currentProduct: CatalogItem;
-  products: CatalogItem[];
+  currentProduct: Product;
+  products: Product[];
 };
 
 export function RelatedProducts({ currentProduct, products }: Props) {
   const relatedProducts = products
     .filter(
       (item) =>
-        item.id !== currentProduct.id &&
-        (item.category === currentProduct.category ||
-          item.productFamily === currentProduct.productFamily)
+        item.id !== currentProduct.id && item.category?.slug === currentProduct.category?.slug
     )
     .slice(0, 4);
 

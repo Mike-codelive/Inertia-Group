@@ -1,23 +1,23 @@
-import type { CatalogItem } from '@/domain/catalog/catalog.types';
+import type { Product } from '@/services/products/products.types';
 import { useSavedPart } from '@/hooks/useSavedPart';
 import { slugify } from '@/lib/slugify';
 import { Bookmark } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 type Props = {
-  item: CatalogItem;
+  item: Product;
 };
 
 export function CatalogCard({ item }: Props) {
   const { saved, toggleSaved } = useSavedPart(item.id, item.name);
 
   return (
-    <Link to={`/catalog/${slugify(item.category)}/${item.slug}`}>
+    <Link to={`/products/${slugify(item.category?.slug ?? '')}/${item.slug}`}>
       <div className="group cursor-pointer grid grid-cols-[150px_1fr] border border-black/20 dark:border-white/20 bg-white dark:bg-transparent hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
         <div className="flex items-center justify-center">
           <div>
             <img
-              src={item.image}
+              // src={item.image}
               alt={item.name}
               loading="lazy"
               className="object-contain  border-r px-4 border-black/10 dark:border-white/10"
