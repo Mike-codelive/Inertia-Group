@@ -8,7 +8,7 @@ import { SearchSidebarSkeleton } from '@/components/search/SearchSidebarSkeleton
 import { ErrorState } from '@/components/ui/error-state';
 import { Spinner } from '@/components/ui/spinner';
 
-import { useProducts } from '@/hooks/useProducts';
+import { useSearchProducts } from '@/hooks/useSearchProducts';
 
 import type { CatalogFilters } from '@/types/search';
 
@@ -21,29 +21,21 @@ type Props = {
 };
 
 function SearchResultsContent({ query, filters, setFilters }: Props) {
-  const { products, loading, error } = useProducts();
-
-  const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
+  const [page, setPage] = useState(1);
 
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
-  const normalizedQuery = query.toLowerCase();
-
-  const searchedItems = products.filter((item) => {
-    if (!normalizedQuery) {
-      return true;
-    }
-
-    return (
-      item.name.toLowerCase().includes(normalizedQuery) ||
-      item.description?.toLowerCase().includes(normalizedQuery) ||
-      item.productFamily?.toLowerCase().includes(normalizedQuery)
-    );
+  const { products, loading, error, hasMore } = useSearchProducts({
+    query,
+    categories: filters.categories,
+    productFamilies: filters.productFamilies,
+    page,
+    limit: ITEMS_PER_PAGE,
   });
 
   const categories = [
     ...new Set(
-      searchedItems
+      products
         .map((item) => item.category?.slug)
         .filter((slug): slug is string => typeof slug === 'string')
     ),
@@ -51,47 +43,25 @@ function SearchResultsContent({ query, filters, setFilters }: Props) {
 
   const productFamilies = [
     ...new Set(
-      searchedItems
+      products
         .map((item) => item.productFamily)
         .filter((family): family is string => typeof family === 'string')
     ),
   ];
 
-  const filteredItems = searchedItems.filter((item) => {
-    const categoryMatch =
-      filters.categories.length === 0 || filters.categories.includes(item.category?.slug ?? '');
-
-    const familyMatch =
-      filters.productFamilies.length === 0 ||
-      filters.productFamilies.includes(item.productFamily ?? '');
-
-    return categoryMatch && familyMatch;
-  });
-
-  const count = filteredItems.length;
-
-  const safeVisibleCount =
-    visibleCount > filteredItems.length ? filteredItems.length : visibleCount;
-
-  const visibleItems = filteredItems.slice(0, safeVisibleCount);
+  const count = products.length;
 
   useEffect(() => {
     const target = loadMoreRef.current;
 
-    if (!target) {
+    if (!target || loading || !hasMore) {
       return;
     }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setVisibleCount((prev) => {
-            if (prev >= count) {
-              return prev;
-            }
-
-            return prev + ITEMS_PER_PAGE;
-          });
+          setPage((prev) => prev + 1);
         }
       },
       {
@@ -102,7 +72,7 @@ function SearchResultsContent({ query, filters, setFilters }: Props) {
     observer.observe(target);
 
     return () => observer.disconnect();
-  }, [count]);
+  }, [loading]);
 
   if (error) {
     return <ErrorState title="Unable to load catalog" description={error} />;
@@ -110,7 +80,7 @@ function SearchResultsContent({ query, filters, setFilters }: Props) {
 
   return (
     <div className="container mx-auto min-h-[calc(100dvh-120px)] px-6">
-      {loading ? (
+      {loading && page === 1 ? (
         <div className="relative">
           <div className="fixed top-16.25 left-0 right-0 z-30 border-b bg-background">
             <div className="container mx-auto px-6 py-4">
@@ -128,7 +98,7 @@ function SearchResultsContent({ query, filters, setFilters }: Props) {
             <div className="mb-12 min-w-0">
               <div className="mt-5 grid gap-6 min-[0px]:grid-cols-1 min-[1025px]:grid-cols-2 xl:grid-cols-3">
                 {Array.from({
-                  length: 12,
+                  length: ITEMS_PER_PAGE,
                 }).map((_, index) => (
                   <CatalogCardSkeleton key={index} />
                 ))}
@@ -161,11 +131,7 @@ function SearchResultsContent({ query, filters, setFilters }: Props) {
                   setFilters={setFilters}
                   categories={categories}
                   productFamilies={productFamilies}
-                  onFilterChange={() => {
-                    if (visibleCount !== ITEMS_PER_PAGE) {
-                      setVisibleCount(ITEMS_PER_PAGE);
-                    }
-                  }}
+                  onFilterChange={() => undefined}
                 />
               </div>
             </div>
@@ -178,16 +144,18 @@ function SearchResultsContent({ query, filters, setFilters }: Props) {
               ) : (
                 <>
                   <div className="mt-5 grid gap-6 min-[0px]:grid-cols-1 min-[1025px]:grid-cols-2 xl:grid-cols-3">
-                    {visibleItems.map((item) => (
+                    {products.map((item) => (
                       <CatalogCard key={item.id} item={item} />
                     ))}
                   </div>
 
-                  {visibleCount < count && (
-                    <div ref={loadMoreRef} className="flex justify-center py-10">
+                  {loading && page > 1 && (
+                    <div className="flex justify-center py-10">
                       <Spinner />
                     </div>
                   )}
+
+                  {!loading && hasMore && <div ref={loadMoreRef} className="h-10" />}
                 </>
               )}
             </div>
@@ -199,5 +167,13 @@ function SearchResultsContent({ query, filters, setFilters }: Props) {
 }
 
 export function SearchResults(props: Props) {
-  return <SearchResultsContent key={props.query} {...props} />;
+  return (
+    <SearchResultsContent
+      key={JSON.stringify({
+        query: props.query,
+        filters: props.filters,
+      })}
+      {...props}
+    />
+  );
 }

@@ -1,5 +1,8 @@
 import { supabase } from '@/services/supabase/client';
-import type { Product } from './products.types';
+
+import { mapProduct } from './products.mapper';
+
+import type { Product, SearchProductsParams } from './products.types';
 
 export async function getProducts(): Promise<Product[]> {
   const { data, error } = await supabase.from('products').select(`
@@ -23,19 +26,7 @@ export async function getProducts(): Promise<Product[]> {
     throw new Error(error.message);
   }
 
-  return data.map((product) => ({
-    id: product.id,
-    name: product.name,
-    slug: product.slug,
-    description: product.description,
-    image: product.image_url,
-    cavities: product.cavities,
-    productFamily: product.product_family,
-    terminalSize: product.terminal_size,
-    sealable: false,
-    created_at: product.created_at,
-    category: product.category?.[0] ?? null,
-  }));
+  return data.map(mapProduct);
 }
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
@@ -66,17 +57,64 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
     throw new Error(error.message);
   }
 
-  return {
-    id: data.id,
-    name: data.name,
-    slug: data.slug,
-    description: data.description,
-    image: data.image_url,
-    cavities: data.cavities,
-    productFamily: data.product_family,
-    terminalSize: data.terminal_size,
-    sealable: false,
-    created_at: data.created_at,
-    category: data.category?.[0] ?? null,
-  };
+  return mapProduct(data);
+}
+
+export async function searchProducts({
+  query,
+  categories,
+  productFamilies,
+  page = 1,
+  limit = 12,
+}: SearchProductsParams): Promise<Product[]> {
+  let request = supabase.from('products').select(`
+      id,
+      name,
+      slug,
+      description,
+      image_url,
+      cavities,
+      product_family,
+      terminal_size,
+      created_at,
+      category:categories (
+        id,
+        name,
+        slug
+      )
+    `);
+
+  if (query) {
+    request = request.or(`
+      name.ilike.%${query}%,
+      description.ilike.%${query}%,
+      product_family.ilike.%${query}%
+    `);
+  }
+
+  if (productFamilies?.length) {
+    request = request.in('product_family', productFamilies);
+  }
+
+  const from = (page - 1) * limit;
+
+  const to = from + limit - 1;
+
+  request = request.range(from, to);
+
+  const { data, error } = await request;
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  let mappedProducts = data.map(mapProduct);
+
+  if (categories?.length) {
+    mappedProducts = mappedProducts.filter((product) =>
+      categories.includes(product.category?.slug ?? '')
+    );
+  }
+
+  return mappedProducts;
 }

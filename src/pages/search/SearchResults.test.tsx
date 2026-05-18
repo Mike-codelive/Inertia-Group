@@ -1,11 +1,11 @@
-import type { CatalogItem } from '@/domain/catalog/catalog.types';
-import { useCatalog } from '@/hooks/useCatalog';
+import { useProducts } from '@/hooks/useProducts';
 import { act, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import type { Product } from '@/services/products/products.types';
 import { SearchResults } from './SearchResults';
 
-jest.mock('@/hooks/useCatalog', () => ({
-  useCatalog: jest.fn(),
+jest.mock('@/hooks/useProducts', () => ({
+  useProducts: jest.fn(),
 }));
 
 const filters = {
@@ -15,17 +15,21 @@ const filters = {
 
 const setFilters = jest.fn();
 
-const makeProduct = (id: number): CatalogItem => ({
+const makeProduct = (id: number): Product => ({
   id: String(id),
   slug: `connector-${id}`,
   name: `Connector ${id}`,
-  category: id % 2 === 0 ? 'Connectors' : 'Seals',
+  category:
+    id % 2 === 0
+      ? { id: 'connectors', name: 'Connectors', slug: 'connectors' }
+      : { id: 'seals', name: 'Seals', slug: 'seals' },
   image: '/connector.webp',
   description: 'Connector',
   cavities: id,
   productFamily: id % 2 === 0 ? 'HCP' : 'SCP',
   terminalSize: 1.5,
   sealable: true,
+  created_at: '2026-01-01T00:00:00.000Z',
 });
 
 describe('SearchResults', () => {
@@ -49,7 +53,7 @@ describe('SearchResults', () => {
   });
 
   it('shows the loading state while catalog data is loading', () => {
-    jest.mocked(useCatalog).mockReturnValue({ data: [], loading: true, error: null });
+    jest.mocked(useProducts).mockReturnValue({ products: [], loading: true, error: null });
 
     render(<SearchResults query="connector" filters={filters} setFilters={setFilters} />);
 
@@ -58,7 +62,7 @@ describe('SearchResults', () => {
   });
 
   it('shows an empty result message', () => {
-    jest.mocked(useCatalog).mockReturnValue({ data: [], loading: false, error: null });
+    jest.mocked(useProducts).mockReturnValue({ products: [], loading: false, error: null });
 
     render(<SearchResults query="missing" filters={filters} setFilters={setFilters} />);
 
@@ -66,8 +70,8 @@ describe('SearchResults', () => {
   });
 
   it('renders results and loads more items when the sentinel intersects', () => {
-    jest.mocked(useCatalog).mockReturnValue({
-      data: Array.from({ length: 13 }, (_, index) => makeProduct(index + 1)),
+    jest.mocked(useProducts).mockReturnValue({
+      products: Array.from({ length: 13 }, (_, index) => makeProduct(index + 1)),
       loading: false,
       error: null,
     });

@@ -15,12 +15,12 @@ export function ProductHero({ product }: Props) {
 
       <div className="grid gap-14 print:gap-6 lg:grid-cols-[1fr_500px] print:grid-cols-2">
         <div className="h-fit border border-black/10 dark:border-white/10">
-          {/* <img
-            src={product.image}
+          <img
+            src={product.imageUrl}
             alt={product.name}
             loading="lazy"
             className="w-full object-contain p-5 print:max-h-72 print:p-2"
-          /> */}
+          />
         </div>
 
         <div>

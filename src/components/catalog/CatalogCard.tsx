@@ -17,7 +17,7 @@ export function CatalogCard({ item }: Props) {
         <div className="flex items-center justify-center">
           <div>
             <img
-              // src={item.image}
+              src={item.imageUrl}
               alt={item.name}
               loading="lazy"
               className="object-contain  border-r px-4 border-black/10 dark:border-white/10"

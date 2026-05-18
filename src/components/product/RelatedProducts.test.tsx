@@ -1,22 +1,27 @@
-import type { CatalogItem } from '@/domain/catalog/catalog.types';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import type { Product } from '@/services/products/products.types';
 import { RelatedProducts } from './RelatedProducts';
 
-const baseProduct: CatalogItem = {
+const baseProduct: Product = {
   id: '1',
   slug: 'connector-a',
   name: 'Connector A',
-  category: 'Connectors',
+  category: {
+    id: 'connectors',
+    name: 'Connectors',
+    slug: 'connectors',
+  },
   image: '/connector.webp',
   description: 'Connector',
   cavities: 2,
   productFamily: 'HCP',
   terminalSize: 1.5,
   sealable: true,
+  created_at: '2026-01-01T00:00:00.000Z',
 };
 
-const relatedProduct: CatalogItem = {
+const relatedProduct: Product = {
   ...baseProduct,
   id: '2',
   slug: 'connector-b',
@@ -41,7 +46,11 @@ describe('RelatedProducts', () => {
       id: '3',
       slug: 'seal-a',
       name: 'Seal A',
-      category: 'Seals',
+      category: {
+        id: 'seals',
+        name: 'Seals',
+        slug: 'seals',
+      },
       productFamily: 'SCP',
     };
 

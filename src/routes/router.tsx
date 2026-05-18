@@ -16,6 +16,7 @@ import { PartsPage } from '@/pages/parts/Parts';
 import { ProductDetailsPage } from '@/pages/product/ProductDetails';
 import { RegisterPage } from '@/pages/auth/RegisterPage';
 import { AccountPage } from '@/pages/account/AccountPage';
+import { CategoryPage } from '@/pages/category/CategoryPage';
 
 export const router = (isReady: boolean) =>
   createBrowserRouter([
@@ -70,6 +71,10 @@ export const router = (isReady: boolean) =>
             {
               path: '/register',
               element: <RegisterPage />,
+            },
+            {
+              path: '/category/:categorySlug',
+              element: <CategoryPage />,
             },
           ],
         },
