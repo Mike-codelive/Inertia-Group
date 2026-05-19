@@ -11,6 +11,7 @@ export type ProductRow = {
   description: string | null;
   image_url: string | null;
   cavities: number | null;
+  sealable: boolean | null;
   product_family: string | null;
   terminal_size: number | null;
   created_at: string;
@@ -23,7 +24,7 @@ export type Product = {
   slug: string;
   description: string | null;
   imageUrl: string;
-  sealable: boolean;
+  sealable: boolean | null;
   cavities: number | null;
   productFamily: string | null;
   terminalSize: number | null;

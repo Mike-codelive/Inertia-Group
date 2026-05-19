@@ -15,6 +15,7 @@ export async function getProducts(): Promise<Product[]> {
       product_family,
       terminal_size,
       created_at,
+      sealable,
       category:categories (
         id,
         name,
@@ -43,6 +44,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
       product_family,
       terminal_size,
       created_at,
+      sealable,
       category:categories (
         id,
         name,
@@ -75,6 +77,7 @@ export async function searchProducts({
       image_url,
       cavities,
       product_family,
+      sealable,
       terminal_size,
       created_at,
       category:categories (
@@ -85,11 +88,17 @@ export async function searchProducts({
     `);
 
   if (query) {
-    request = request.or(`
-      name.ilike.%${query}%,
-      description.ilike.%${query}%,
-      product_family.ilike.%${query}%
-    `);
+    const terms = query.trim().toLowerCase().split(/\s+/);
+
+    for (const term of terms) {
+      request = request.or(
+        [
+          `name.ilike.%${term}%`,
+          `description.ilike.%${term}%`,
+          `product_family.ilike.%${term}%`,
+        ].join(',')
+      );
+    }
   }
 
   if (productFamilies?.length) {

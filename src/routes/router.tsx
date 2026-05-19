@@ -48,7 +48,7 @@ export const router = (isReady: boolean) =>
             // },
 
             {
-              path: '/products/:slug',
+              path: '/products/:categorySlug/:slug',
               element: <ProductDetailsPage />,
             },
           ],

@@ -12,7 +12,8 @@ export function mapProduct(product: ProductRow): Product {
     cavities: product.cavities,
     productFamily: product.product_family,
     terminalSize: product.terminal_size,
+    sealable: product.sealable,
     createdAt: product.created_at,
-    category: Array.isArray(product.category) ? product.category[0] : product.category,
+    category: Array.isArray(product.category) ? (product.category[0] ?? null) : product.category,
   };
 }

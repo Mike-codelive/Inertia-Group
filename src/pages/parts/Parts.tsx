@@ -1,22 +1,43 @@
 import { Link } from 'react-router-dom';
 import { MoveRight } from 'lucide-react';
 
-import { productCatalog } from '@/data/productCatalog';
-
+import { useProducts } from '@/hooks/useProducts';
 import { useSavedParts } from '@/hooks/useSavedParts';
 
 import { Button } from '@/components/ui/button';
 import { CatalogCard } from '@/components/catalog/CatalogCard';
+import { CatalogCardSkeleton } from '@/components/catalog/CatalogCardSkeleton';
+import { ErrorState } from '@/components/ui/error-state';
 
 export function PartsPage() {
   const { savedParts } = useSavedParts();
 
-  const savedCatalogItems = productCatalog.filter((item) => savedParts.includes(item.id));
+  const { products, loading, error } = useProducts();
+
+  const savedCatalogItems = products.filter((item) => savedParts.includes(item.id));
 
   const hasParts = savedCatalogItems.length > 0;
 
+  if (loading) {
+    return (
+      <section className="container mx-auto min-h-[calc(100dvh-65px)] px-6 pt-28 pb-12">
+        <div className="grid gap-6 min-[0px]:grid-cols-1 min-[1025px]:grid-cols-2 xl:grid-cols-3">
+          {Array.from({
+            length: 6,
+          }).map((_, index) => (
+            <CatalogCardSkeleton key={index} />
+          ))}
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return <ErrorState title="Unable to load saved parts" description={error} />;
+  }
+
   return (
-    <section className="container mx-auto min-h-[calc(100dvh-65px)] pt-28 pb-12 px-6">
+    <section className="container mx-auto min-h-[calc(100dvh-65px)] px-6 pt-28 pb-12">
       {hasParts ? (
         <>
           <div className="mb-10 border-b pb-4">
